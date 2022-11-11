@@ -11,4 +11,7 @@ type User = {
 type Test = {
   abc: string;
 };
-export { User, Test };
+type ImageIndex = {
+  [key: string]: string;
+};
+export { User, Test, ImageIndex };

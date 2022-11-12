@@ -1,22 +1,22 @@
-import instagram from "../assets/instagram.png";
-
+import img from "../assets/index";
+import { Link } from "react-router-dom";
 function PageFooter(props: any) {
   return (
-    <div className="bg-gray-800 h-20 flex justify-center items-center text-white">
-      <div className="flex justify-around w-1/2">
-        <div className="flex flex-col">
-          <a href="/impressum">Impressum</a>
-          <a href="/kniep">Kniep</a>
-        </div>
-        <a href="https://www.instagram.com/kniep_amrum/">
+    <>
+      <div className=" h-24 absolute bottom-0 w-full flex justify-center items-center text-white">
+        <a href="https://www.instagram.com/kniep_amrum/" target="_blank">
           <img
             className="h-10"
-            src={instagram}
+            src={img.Logos.instagram}
             alt="https://www.instagram.com/kniep_amrum/"
           />
         </a>
       </div>
-    </div>
+      <div className="absolute right-20 bottom-8 flex flex-col text-white">
+        <Link to={"/impressum"}>Impressum</Link>
+        <a href={"/datenschutz.html"}>Datenschutzerklärung</a>
+      </div>
+    </>
   );
 }
 export default PageFooter;

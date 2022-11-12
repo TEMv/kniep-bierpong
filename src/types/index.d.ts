@@ -12,6 +12,9 @@ type Test = {
   abc: string;
 };
 type ImageIndex = {
-  [key: string]: string;
+  Logos: { [key: string]: string };
+  LandingPage: { [key: string]: string };
+  Videos: { [key: string]: string };
 };
+
 export { User, Test, ImageIndex };

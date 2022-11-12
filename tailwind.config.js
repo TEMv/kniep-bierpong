@@ -13,6 +13,12 @@ module.exports = {
       fontFamily: {
         apple: "Helvetica Neue,sans-serif",
         roboto: ["Roboto, sans-serif"],
+        georgia: ["GEORGIA, serif"],
+      },
+      spacing: {
+        128: "32rem",
+        140: "35rem",
+        160: "40rem",
       },
     },
   },

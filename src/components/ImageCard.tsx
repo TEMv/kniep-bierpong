@@ -1,10 +1,7 @@
-import img from "../assets/index";
-import type { ImageIndex } from "../types";
 function ImageCard(props: { image: string }) {
-  let source = props.image;
   return (
-    <div>
-      <img src={img[source as keyof ImageIndex]} />
+    <div className=" h-96 bg-red-800 border-slate-600 w-72 m-5">
+      <img src={props.image} />
     </div>
   );
 }

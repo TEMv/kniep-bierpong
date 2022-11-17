@@ -1,7 +1,7 @@
 function Impressum(props: any) {
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-2/5 h-full flex flex-col items-center shadow-xl shadow-gray-500">
+      <div className="sm:w-2/5 w-full h-full flex flex-col items-center shadow-xl shadow-gray-500">
         <div className="text-4xl font-medium mt-5">IMPRESSUM</div>
         <br />
         <div className="flex flex-col justify-center items-center">
@@ -19,14 +19,14 @@ function Impressum(props: any) {
         <br />
         <div className="text-2xl">Kontakt</div>
         <div className="w-full flex flex-col justify-center items-center">
-          <p className="w-1/3 flex justify-between">
+          <p className="sm:w-1/3 w-full flex justify-between">
             Telefon:
             <a className="pl-10" href="tel:+4915127147807">
               +49 1512 7147807
             </a>
           </p>
 
-          <div className="w-1/3 flex justify-between">
+          <div className="sm:w-1/3 w-full flex justify-between">
             E-Mail:
             <a className="pl-10" href="mailto:kniepamrum@gmx.de">
               kniepamrum@gmx.de

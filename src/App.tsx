@@ -10,6 +10,7 @@ import type { User } from "./types";
 
 function App() {
   const [user, setUser] = useState<User>();
+
   return (
     <div>
       <Routes>

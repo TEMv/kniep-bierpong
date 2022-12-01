@@ -5,7 +5,7 @@ type User = {
   profilePicturePath?: string;
   firstname: string;
   lastname: string;
-  email: string;
+  email?: string;
   role: "admin" | "viewer";
 };
 type Test = {
@@ -16,5 +16,12 @@ type ImageIndex = {
   LandingPage: { [key: string]: string };
   Videos: { [key: string]: string };
 };
-
-export { User, Test, ImageIndex };
+type LoginValues = {
+  username: InputState;
+  password: InputState;
+};
+type InputState = {
+  status: "warning" | "valid";
+  value: string;
+};
+export { User, Test, ImageIndex, LoginValues };

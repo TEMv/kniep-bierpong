@@ -5,7 +5,7 @@ function Impressum(props: any) {
         <div className="text-4xl font-medium mt-5">IMPRESSUM</div>
         <br />
         <div className="flex flex-col justify-center items-center">
-          <div>Johannsen + Lorenzen + Lorenzen + van Bargen GbR</div>
+          <div>Johannsen + Lorenzen + Lorenzen + von Bargen GbR</div>
           <br />
           <div>Papenkamp 51 24114 Kiel</div>
         </div>
@@ -13,7 +13,7 @@ function Impressum(props: any) {
         <div className="flex justify-center flex-col items-center">
           <div className="text-2xl">Gesellschafter</div>
           <div>
-            Mats Johannsen, Matti Lorenzen, Leve Lorenzen, Sebastian van Bargen
+            Mats Johannsen, Matti Lorenzen, Leve Lorenzen, Sebastian von Bargen
           </div>
         </div>
         <br />
@@ -29,7 +29,7 @@ function Impressum(props: any) {
           <div className="sm:w-1/3 w-full flex justify-between">
             E-Mail:
             <a className="pl-10" href="mailto:kniepamrum@gmx.de">
-              kniepamrum@gmx.de
+              info@kniep-amrum.de
             </a>
           </div>
         </div>

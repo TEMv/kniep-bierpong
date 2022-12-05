@@ -1,11 +1,11 @@
 type User = {
   username: string;
   uid: number;
-  sessionTk?: string;
   profilePicturePath?: string;
   firstname: string;
   lastname: string;
   email?: string;
+  last_login: Date;
   role: "admin" | "viewer";
 };
 type Test = {

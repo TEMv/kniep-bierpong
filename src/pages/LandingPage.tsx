@@ -4,10 +4,13 @@ import ImageCard from "../components/ImageCard";
 import { User } from "../types";
 import img from "../assets/index";
 
-function LandingPage(props: { user?: User }) {
+function LandingPage(props: {
+  user: User;
+  setUser: React.Dispatch<React.SetStateAction<User>>;
+}) {
   return (
     <div className="h-screen flex flex-col overflow-x-hidden">
-      <LandingPageContent />
+      <LandingPageContent user={props.user} setUser={props.setUser} />
       <video
         autoPlay
         loop

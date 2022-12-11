@@ -8,13 +8,20 @@ type User = {
   last_login: Date;
   role: "admin" | "viewer";
 };
-type Test = {
-  abc: string;
+type EventProps = {
+  name: string;
+  start: string;
+  end?: string;
+  eventid: number;
+  description?: string;
+  type: string;
+  location?: string;
 };
 type ImageIndex = {
   Logos: { [key: string]: string };
   LandingPage: { [key: string]: string };
   Videos: { [key: string]: string };
+  Icons: { [key: string]: any };
 };
 type LoginValues = {
   username: InputState;
@@ -24,4 +31,15 @@ type InputState = {
   status: "warning" | "valid";
   value: string;
 };
-export { User, Test, ImageIndex, LoginValues };
+type ContentMap = {
+  [key: number]: JSX.Element;
+};
+type ModalContentType = "edit-teams" | "add-missing-teams";
+export {
+  User,
+  EventProps,
+  ImageIndex,
+  LoginValues,
+  ContentMap,
+  ModalContentType,
+};

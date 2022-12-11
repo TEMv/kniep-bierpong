@@ -18,3 +18,24 @@ code {
   font-family: "GEORGIA";
   src: "../assets/Fonts/GeorgiaPro-CondRegular.ttf";
 }
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 20px;
+    height: 20px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #1e293b;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 100vh;
+    border: 3px solid #475569;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+  }
+}

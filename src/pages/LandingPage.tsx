@@ -20,7 +20,7 @@ function LandingPage(props: {
       >
         <source src={img.Videos.backgroundvideo} type="video/mp4" />
       </video>
-      <PageFooter />
+      <PageFooter insta={true} />
     </div>
   );
 }

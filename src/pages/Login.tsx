@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { LoginValues } from "../types";
 import img from "../assets/index";
 import { useLogin } from "../hooks/queries";
+import PageFooter from "../components/PageFooter";
 
 function Login(props: any) {
   const [inputs, setInputs] = useState<LoginValues>({
@@ -17,7 +18,6 @@ function Login(props: any) {
     e: React.ChangeEvent<HTMLInputElement>,
     key: string
   ): void => {
-    console.log(e.target.value);
     if (
       (/^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(
         e.target.value
@@ -85,20 +85,7 @@ function Login(props: any) {
         className=" absolute top-12 left-12 w-20 h-16 bg-gray-500 rounded-3xl flex items-center justify-center cursor-pointer"
         onClick={() => navigate("/")}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-12 h-12 text-white"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
-          />
-        </svg>
+        {img.Icons.arrowLeft("w-12 h-12 text-white")}
       </div>
       <div className="flex flex-col bg-gray-500 w-80 justify-center items-center h-96 rounded-3xl relative">
         <div className="font-georgia absolute top-8 text-white justify-around w-64 drop-shadow-sm text-4xl tracking-widest flex items-center">
@@ -157,12 +144,13 @@ function Login(props: any) {
           </span>
         </div>
         <button
-          className="py-2 px-5 mt-2 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          className="py-2 px-5 mt-2 mr-2 mb-2 text-sm font-medium focus:outline-none  rounded-lg border  focus:z-10 focus:ring-4  focus:ring-gray-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700"
           onClick={() => sendLogin()}
         >
           Login
         </button>
       </div>
+      <PageFooter />
     </div>
   );
 }

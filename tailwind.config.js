@@ -16,6 +16,7 @@ module.exports = {
         georgia: ["GEORGIA, serif"],
       },
       spacing: {
+        68: "17rem",
         128: "32rem",
         140: "35rem",
         160: "40rem",

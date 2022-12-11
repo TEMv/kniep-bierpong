@@ -1,5 +1,5 @@
 import type { User } from "../types";
-export const emptyUser: User = {
+const emptyUser: User = {
   username: "",
   firstname: "",
   lastname: "",
@@ -7,3 +7,5 @@ export const emptyUser: User = {
   role: "viewer",
   last_login: new Date(),
 };
+
+export { emptyUser };

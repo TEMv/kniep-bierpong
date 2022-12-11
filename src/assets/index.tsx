@@ -15,7 +15,7 @@ import Amrum8 from "../assets/LandingPagePhotos/Amrum_2022_BPT-6848.jpg";
 import Amrum9 from "../assets/LandingPagePhotos/Amrum_2022_BPT-6854.jpg";
 import backgroundvideo from "../assets/Video/amrum.mp4";
 import type { ImageIndex } from "../types";
-
+import { arrowLeft, clock, house } from "./icons";
 const index: ImageIndex = {
   Logos: {
     logo_weiss,
@@ -37,5 +37,6 @@ const index: ImageIndex = {
     Amrum9,
   },
   Videos: { backgroundvideo },
+  Icons: { arrowLeft, clock, house },
 };
 export default index;

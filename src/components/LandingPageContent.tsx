@@ -3,13 +3,14 @@ import "../styles/index.css";
 import { Link } from "react-router-dom";
 import type { User } from "../types";
 import { useState } from "react";
-import { emptyUser } from "../constants/user";
+import { emptyUser } from "../constants";
 type PageHeaderProps = {
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
 };
 function PageHeader(props: PageHeaderProps) {
   const [profileOpen, setProfileOpen] = useState<boolean>(false);
+  console.log(props.user);
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -37,6 +38,9 @@ function PageHeader(props: PageHeaderProps) {
                 <div className="w-0 h-0 border-l-transparent border-l-8 border-r-8 border-r-transparent border-b-white border-opacity-25 border-b-8 " />
                 <div className="flex flex-col w-full justify-evenly items-center h-full bg-gray-500 bg-opacity-50 rounded-lg">
                   <Link to={"/profile"}>PROFIL</Link>
+                  {props.user.role === "admin" && (
+                    <Link to={"/admin"}>ADMIN</Link>
+                  )}
                   <div className="cursor-pointer" onClick={() => logout()}>
                     LOGOUT
                   </div>

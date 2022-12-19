@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { LoginValues } from "../types/index";
+import { LoginValues, BPTeamValues } from "../types/index";
 const apiUrl = process.env.REACT_APP_API_URL;
 const token = {
   headers: {
@@ -22,9 +22,24 @@ export const useLogin = () =>
     },
   });
 
+export const useEditTeam = (bpid: number, queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: async ({ teamname, p1, p2, ids }: BPTeamValues) => {
+      const res = await axios.post(
+        `${apiUrl}/editteam`,
+        { teamname: teamname, p1: p1, p2: p2, ids: ids, bpid: bpid },
+        token
+      );
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["teams", bpid] });
+    },
+  });
+
 export const useTeams = (id: number, enabled: boolean) =>
   useQuery({
-    queryKey: ["teams", id, enabled],
+    queryKey: ["teams", id],
     queryFn: async () => {
       const res = await axios.get(`${apiUrl}/teams/${id}`, token);
       return res.data;

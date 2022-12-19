@@ -7,6 +7,7 @@ import Standings from "./Standings";
 import Bierpong from "./Bierpong";
 import EventWrapper from "./EventWrapper";
 import AdminPage from "./AdminPage";
+import BierpongErgebnisPage from "./BierpongErgebnisPage";
 export {
   Events,
   Impressum,
@@ -17,4 +18,5 @@ export {
   Bierpong,
   EventWrapper,
   AdminPage,
+  BierpongErgebnisPage,
 };

@@ -4,11 +4,12 @@ import img from "../assets/index";
 import { EventProps } from "../types";
 import dayjs from "dayjs";
 function Bierpong(props: EventProps) {
+  console.log(props.eventid);
   const turnier = useEvent("bierpong", props.eventid);
   const teams = useTeams(turnier.data?.bpid, turnier.isSuccess);
   const navigate = useNavigate();
-  console.log(turnier.data);
-  console.log(teams.data);
+  console.log(turnier.isSuccess);
+  console.log(teams.isSuccess);
   return (
     <div className="bg-gray-600 h-screen flex items-center flex-col">
       <div
@@ -20,26 +21,28 @@ function Bierpong(props: EventProps) {
       <div className="text-5xl text-white my-8 font-georgia tracking-widest">
         BIERPONGTURNIER
       </div>
-      <div className="flex justify-evenly w-full">
-        <div className="text-3xl text-white  flex flex-col items-center">
-          <div className="">WANN?</div>
-          <div>
-            Am{" "}
-            {dayjs(props.start).format("DD.MM.YYYY") +
-              " um " +
-              dayjs(props.start).format("HH:mm")}
+      {teams.isSuccess && turnier.isSuccess ? (
+        <div className="flex justify-evenly w-full">
+          <div className="text-3xl text-white  flex flex-col items-center">
+            <div className="">WANN?</div>
+            <div>
+              Am{" "}
+              {dayjs(props.start).format("DD.MM.YYYY") +
+                " um " +
+                dayjs(props.start).format("HH:mm")}
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <div className="text-2xl text-white">
+              Anzahl Teams: {teams.isSuccess && teams.data.length}
+            </div>
+            <div className="text-white text-2xl">
+              Freie Plätze:{" "}
+              {teams.isSuccess && turnier.data.teams_amt - teams.data.length}
+            </div>
           </div>
         </div>
-        <div className="flex flex-col">
-          <div className="text-2xl text-white">
-            Anzahl Teams: {teams.isSuccess && teams.data.length}
-          </div>
-          <div className="text-white text-2xl">
-            Freie Plätze:{" "}
-            {teams.isSuccess && turnier.data.teams_amt - teams.data.length}
-          </div>
-        </div>
-      </div>
+      ) : null}
       <div className="text-3xl py-36 text-white">
         TODO: INTERESSANTE INFOS ZUM TURNIER
       </div>

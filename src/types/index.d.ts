@@ -31,10 +31,43 @@ type InputState = {
   status: "warning" | "valid";
   value: string;
 };
+type BPIDs = {
+  team: number;
+  p1: number;
+  p2: number;
+};
+type BPTeamValues = {
+  teamname: InputState;
+  p1: InputState;
+  p2: InputState;
+  ids: BPIDs;
+};
 type ContentMap = {
   [key: number]: JSX.Element;
 };
+type BPPlayer = {
+  playerid: number;
+  name: string;
+  teamid: number;
+};
+type BPTeamResponse = {
+  group: number;
+  players: [p1: BPPlayer, p2: BPPlayer];
+  teamid: number;
+  teamname: string;
+};
 type ModalContentType = "edit-teams" | "add-missing-teams";
+
+type BPMatch = {
+  match_id: number;
+  bp_id: number;
+  team1_id: number;
+  team2_id: number;
+  cup_diff?: number;
+  winner_id?: number;
+  start_ts?: string;
+  end_ts?: string;
+};
 export {
   User,
   EventProps,
@@ -42,4 +75,7 @@ export {
   LoginValues,
   ContentMap,
   ModalContentType,
+  BPTeamValues,
+  BPTeamResponse,
+  BPMatch,
 };

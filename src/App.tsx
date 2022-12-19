@@ -10,6 +10,7 @@ import {
   Login,
   EventWrapper,
   AdminPage,
+  BierpongErgebnisPage,
 } from "./pages/index";
 import type { User, EventProps } from "./types";
 import { emptyUser } from "./constants";
@@ -17,7 +18,7 @@ import { useEvents } from "./hooks/queries";
 function App() {
   const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
   const isEmpty =
-    storedUser &&
+    !storedUser &&
     Object.keys(storedUser).length === 0 &&
     Object.getPrototypeOf(storedUser) === Object.prototype;
 
@@ -45,6 +46,15 @@ function App() {
                       path="standings"
                       element={
                         <Standings {...evt} key={evt.eventid + "standings"} />
+                      }
+                    />
+                    <Route
+                      path="admin"
+                      element={
+                        <BierpongErgebnisPage
+                          {...evt}
+                          key={evt.eventid + "admin"}
+                        />
                       }
                     />
                   </Route>

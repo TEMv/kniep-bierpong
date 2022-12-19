@@ -8,4 +8,11 @@ const emptyUser: User = {
   last_login: new Date(),
 };
 
-export { emptyUser };
+const GroupMap = {
+  0: "Gruppe A",
+  1: "Gruppe B",
+  2: "Gruppe C",
+  3: "Gruppe D",
+} as const;
+
+export { emptyUser, GroupMap };

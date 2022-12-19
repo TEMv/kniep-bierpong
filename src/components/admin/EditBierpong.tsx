@@ -2,6 +2,7 @@ import { useEvents, useEvent, useTeams } from "../../hooks/queries";
 import { EventProps } from "../../types";
 import { useState } from "react";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 import img from "../../assets";
 import Modal from "../Modal";
 function EditBierpong(props: any) {
@@ -35,9 +36,7 @@ function EditBierpong(props: any) {
       <div className="text-red-500">Events konnten nicht geladen werden.</div>
     );
   }
-  console.log(turnier.data);
-  console.log(teams.data);
-  console.log(bierpong.data);
+
   return (
     <div className="w-full relative rounded-lg">
       {bierpong.isSuccess &&
@@ -46,7 +45,7 @@ function EditBierpong(props: any) {
           .filter((event: EventProps) => event.type === "bierpong")
           .map((bp: EventProps) => (
             <div
-              className="h-24 bg-slate-800 px-2 mx-2 rounded-lg cursor-pointer hover:drop-shadow-xl drop-shadow-lg flex"
+              className="h-24 bg-slate-800 px-4 pt-1 mx-2 rounded-lg cursor-pointer hover:drop-shadow-xl drop-shadow-lg flex"
               key={bp.eventid}
               onClick={() => setSelectedTourneyId(bp.eventid)}
             >
@@ -101,16 +100,31 @@ function EditBierpong(props: any) {
               </div>
               <div
                 onClick={() => setEditModalVisible(true)}
-                className="h-20 w-48 bg-slate-800 flex flex-col items-center text-center cursor-pointer hover:drop-shadow-xl drop-shadow-lg justify-center rounded-lg"
+                className="h-20 w-48 mr-4 hover:text-primary bg-slate-800 flex flex-col items-center text-center cursor-pointer hover:drop-shadow-xl drop-shadow-lg justify-center rounded-lg"
               >
                 Teams bearbeiten
               </div>
               <div
                 onClick={() => setAddModalVisible(true)}
-                className="h-20 w-48 bg-slate-800 flex flex-col items-center text-center cursor-pointer hover:drop-shadow-xl drop-shadow-lg justify-center rounded-lg"
+                className="h-20 w-48 hover:text-primary bg-slate-800 flex flex-col items-center text-center cursor-pointer hover:drop-shadow-xl drop-shadow-lg justify-center rounded-lg"
               >
                 Fehlende Teams hinzufügen
               </div>
+            </div>
+            <div
+              className={`mt-48  h-20 w-48  bg-slate-800 flex flex-col items-center text-center  drop-shadow-lg justify-center rounded-lg ${
+                turnier.data.teams_amt - teams.data.length === 0
+                  ? "cursor-pointer hover:text-primary hover:drop-shadow-xl"
+                  : "cursor-not-allowed text-gray-600"
+              }`}
+            >
+              {teams.data.length - turnier.data.teams_amt === 0 ? (
+                <Link to={`/events/bierpong/${selectedTourneyId}/admin`}>
+                  Turnierbaum generieren
+                </Link>
+              ) : (
+                "Teams auf " + turnier.data.teams_amt + " auffüllen!"
+              )}
             </div>
           </div>
         )}
@@ -119,13 +133,15 @@ function EditBierpong(props: any) {
         setModalVisible={setEditModalVisible}
         title="Teambearbeitung"
         data={teams.data}
+        bpid={selectedTourneyId}
         type="edit-teams"
       />
       <Modal
         modalVisible={addmodalVisible}
         setModalVisible={setAddModalVisible}
-        title="Teambearbeitung"
+        title="Teams hinzufügen"
         data={teams.data}
+        bpid={selectedTourneyId}
         type="add-missing-teams"
       />
     </div>

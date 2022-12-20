@@ -1,9 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import img from "../assets/index";
 import { EventProps } from "../types";
-import { useTeams } from "../hooks/queries";
+import { useTeams, useMatches } from "../hooks/queries";
+import generateTableState from "../helpers/GenerateTableState";
+import { useTableState } from "../hooks/tableState";
+import { useEffect } from "react";
 function BierpongErgebnisPage(props: EventProps) {
   const teams = useTeams(props.eventid, true);
+  const matches = useMatches(props.eventid);
+  const tableState = useTableState(
+    teams.data,
+    matches.data,
+    teams.isSuccess && matches.isSuccess
+  );
+  useEffect(() => {
+    if (teams.isSuccess && matches.isSuccess) {
+      generateTableState(teams.data, matches.data);
+    }
+  }, [teams.data, matches.data]);
   const navigate = useNavigate();
   return (
     <div className="h-screen bg-slate-900">

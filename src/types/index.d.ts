@@ -67,6 +67,21 @@ type BPMatch = {
   winner_id?: number;
   start_ts?: string;
   end_ts?: string;
+  group: number;
+};
+
+type TableRow = {
+  teamid: number;
+  teamname: string;
+  wins: number;
+  losses: number;
+  cup_diff: number;
+};
+type BPTables = {
+  tableA: Array<TableRow>;
+  tableB: Array<TableRow>;
+  tableC: Array<TableRow>;
+  tableD: Array<TableRow>;
 };
 export {
   User,
@@ -78,4 +93,6 @@ export {
   BPTeamValues,
   BPTeamResponse,
   BPMatch,
+  BPTables,
+  TableRow,
 };

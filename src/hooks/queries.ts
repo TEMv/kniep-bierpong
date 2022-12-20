@@ -73,3 +73,12 @@ export const useBierpong = () =>
       return res.data;
     },
   });
+
+export const useMatches = (bpid: number) =>
+  useQuery({
+    queryKey: ["matches", bpid],
+    queryFn: async () => {
+      const res = await axios.get(`${apiUrl}/matches/${bpid}`, token);
+      return res.data;
+    },
+  });

@@ -1,4 +1,4 @@
-import type { User } from "../types";
+import type { User, TableRow } from "../types";
 const emptyUser: User = {
   username: "",
   firstname: "",
@@ -15,4 +15,6 @@ const GroupMap = {
   3: "Gruppe D",
 } as const;
 
-export { emptyUser, GroupMap };
+const emptyTable: Array<TableRow> = [];
+
+export { emptyUser, GroupMap, emptyTable };

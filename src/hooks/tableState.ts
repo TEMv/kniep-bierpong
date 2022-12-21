@@ -22,23 +22,47 @@ export function useTableState(
   }, [matches, teams]);
 
   function calcTables() {
+    //match matches to group
     const matchesA = matches.filter((match) => match.group === 0);
     const matchesB = matches.filter((match) => match.group === 1);
     const matchesC = matches.filter((match) => match.group === 2);
     const matchesD = matches.filter((match) => match.group === 3);
 
+    //init with right fields
     let { tempGroupA, tempGroupB, tempGroupC, tempGroupD } = initTables();
 
+    //calc wins and losses
     tempGroupA = evaluateGamesForGroup(matchesA, tempGroupA);
     tempGroupB = evaluateGamesForGroup(matchesB, tempGroupB);
     tempGroupC = evaluateGamesForGroup(matchesC, tempGroupC);
     tempGroupD = evaluateGamesForGroup(matchesD, tempGroupD);
+
+    //sort
+    tempGroupA = sortTables(tempGroupA);
+    tempGroupB = sortTables(tempGroupB);
+    tempGroupC = sortTables(tempGroupC);
+    tempGroupD = sortTables(tempGroupD);
+
+    setTables({
+      tableA: tempGroupA,
+      tableB: tempGroupB,
+      tableC: tempGroupC,
+      tableD: tempGroupD,
+    });
+
     /*
-    TODO: Test SPielergebnisse eintragen und gucken, ob games richtig evaluiert werden
-    DANN: Tabellen nach Siegen und Becherdifferenzen Sortieren
+    TODO: Test SPielergebnisse eintragen und gucken, ob games richtig evaluiert werden DONE
+    DANN: Tabellen nach Siegen und Becherdifferenzen Sortieren DONE
     DANN: Alg zum Bestimmen der nächsten Spiele schreiben (Nach sortiertem Array und schauen, ob schon mal gegeneinander gespielt)
 
     */
+  }
+
+  function sortTables(group: Array<TableRow>) {
+    return group.sort(
+      (a, b) =>
+        b.wins - b.losses - (a.wins - a.losses) || b.cup_diff - a.cup_diff
+    );
   }
 
   function initTables() {
@@ -104,8 +128,8 @@ export function useTableState(
       )[0];
       winner_entry = {
         teamid: winner_entry.teamid,
-        wins: winner_entry.wins + 1,
         teamname: winner_entry.teamname,
+        wins: winner_entry.wins + 1,
         losses: winner_entry.losses,
         cup_diff: winner_entry.cup_diff + cup_diff,
       };
@@ -114,14 +138,20 @@ export function useTableState(
       )[0];
       loser_entry = {
         teamid: loser_entry.teamid,
-        wins: loser_entry.wins,
         teamname: loser_entry.teamname,
+        wins: loser_entry.wins,
         losses: loser_entry.losses + 1,
         cup_diff: loser_entry.cup_diff - cup_diff,
       };
-      group = [...group, winner_entry, loser_entry];
+      for (let team in group) {
+        if (group[team].teamid === winner_entry.teamid) {
+          group[team] = winner_entry;
+        } else if (group[team].teamid === loser_entry.teamid) {
+          group[team] = loser_entry;
+        }
+      }
     }
     return group;
   }
-  return null;
+  return tables;
 }

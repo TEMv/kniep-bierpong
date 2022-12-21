@@ -36,7 +36,7 @@ function Modal(props: {
                     key={entry.teamid}
                     onClick={() => openTeam(entry)}
                     className={`py-1 rounded-lg flex hover:text-primary cursor-pointer ${
-                      index % 2 == 0 ? "bg-slate-700" : ""
+                      index % 2 === 0 ? "bg-slate-700" : ""
                     }`}
                   >
                     <div className="rounded-lg w-8 h-8 min-w-8 text-center border-slate-200 border ">
@@ -55,7 +55,7 @@ function Modal(props: {
                     key={entry.teamid}
                     onClick={() => openTeam(entry)}
                     className={`py-1 rounded-lg flex  hover:text-primary cursor-pointer ${
-                      index % 2 == 1 ? "bg-slate-700" : ""
+                      index % 2 === 1 ? "bg-slate-700" : ""
                     }`}
                   >
                     <div className="rounded-lg w-8 h-8 min-w-8 text-center border-slate-200 border ">
@@ -96,7 +96,7 @@ function Modal(props: {
                       })
                     }
                     className={`py-1 border-white border text-center justify-center my-1 flex hover:text-primary cursor-pointer ${
-                      input % 2 == 0 ? "bg-slate-700" : ""
+                      input % 2 === 0 ? "bg-slate-700" : ""
                     }`}
                   >
                     [+]
@@ -118,7 +118,7 @@ function Modal(props: {
                       })
                     }
                     className={`py-1 border-white border text-center justify-center my-1 flex hover:text-primary cursor-pointer ${
-                      input % 2 == 1 ? "bg-slate-700" : ""
+                      input % 2 === 1 ? "bg-slate-700" : ""
                     }`}
                   >
                     [+]
@@ -135,7 +135,6 @@ function Modal(props: {
   }, [props.type, props.data]);
 
   const openTeam = (entry: any) => {
-    console.log(entry);
     setInputValues({
       teamname: { value: entry.teamname || "", status: "valid" },
       p1: { value: entry.players?.p1?.name || "", status: "valid" },

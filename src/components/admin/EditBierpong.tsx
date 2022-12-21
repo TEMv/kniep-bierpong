@@ -120,7 +120,7 @@ function EditBierpong(props: any) {
             >
               {teams.data.length - turnier.data.teams_amt === 0 ? (
                 <Link to={`/events/bierpong/${selectedTourneyId}/admin`}>
-                  Turnierbaum generieren
+                  Turnier administrieren
                 </Link>
               ) : (
                 "Teams auf " + turnier.data.teams_amt + " auffüllen!"

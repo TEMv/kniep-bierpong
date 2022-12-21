@@ -68,6 +68,7 @@ type BPMatch = {
   start_ts?: string;
   end_ts?: string;
   group: number;
+  table_id: number;
 };
 
 type TableRow = {

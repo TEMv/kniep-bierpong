@@ -6,7 +6,7 @@ function EventCard(props: EventProps) {
   const navigate = useNavigate();
   return (
     <div
-      className=" bg-gray-500 cursor-pointer hover:drop-shadow-xl h-36 text-white rounded-lg p-2 my-2 mx-2 drop-shadow-lg shadow-black flex"
+      className=" bg-slate-800 cursor-pointer hover:drop-shadow-xl h-36 text-white rounded-lg p-2 my-2 mx-2 drop-shadow-lg shadow-black flex"
       onClick={() => navigate(props.type + "/" + props.eventid)}
     >
       <div>

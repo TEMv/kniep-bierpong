@@ -11,9 +11,9 @@ function ProfilePage(props: { user: User }) {
   }, []);
 
   return (
-    <div className="bg-gray-600 w-full h-screen">
+    <div className="bg-slate-900 w-full h-screen">
       <div
-        className=" absolute top-12 left-12 w-20 h-16 bg-gray-500 rounded-3xl flex items-center justify-center cursor-pointer"
+        className=" absolute top-12 left-12 w-20 h-16 bg-slate-800 rounded-3xl flex items-center justify-center cursor-pointer"
         onClick={() => navigate("/")}
       >
         {img.Icons.arrowLeft("w-12 h-12 text-white")}

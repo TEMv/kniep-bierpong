@@ -11,9 +11,9 @@ function Bierpong(props: EventProps) {
   console.log(turnier.isSuccess);
   console.log(teams.isSuccess);
   return (
-    <div className="bg-gray-600 h-screen flex items-center flex-col">
+    <div className="bg-slate-900 h-screen flex items-center flex-col">
       <div
-        className=" absolute top-12 left-12 w-20 h-16 bg-gray-500 rounded-3xl flex items-center justify-center cursor-pointer"
+        className=" absolute top-12 left-12 w-20 h-16 bg-slate-800 rounded-3xl flex items-center justify-center cursor-pointer"
         onClick={() => navigate("/events")}
       >
         {img.Icons.arrowLeft("w-12 h-12 text-white")}
@@ -47,12 +47,12 @@ function Bierpong(props: EventProps) {
         TODO: INTERESSANTE INFOS ZUM TURNIER
       </div>
       <div className="w-full flex justify-evenly text-md text-white">
-        <div className="flex bg-gray-500 rounded-lg w-64 h-32 drop-shadow-lg shadow-black justify-center items-center text-center cursor-not-allowed">
+        <div className="flex bg-slate-800 rounded-lg w-64 h-32 drop-shadow-lg shadow-black justify-center items-center text-center cursor-not-allowed">
           Anmelden <br /> (Anmeldung aktuell nur über Instagram!)
         </div>
         <span>{"<---XOR---->"}</span>
         <div
-          className="flex bg-gray-500 rounded-lg w-64 h-32 drop-shadow-lg hover:drop-shadow-xl shadow-black justify-center items-center text-center cursor-pointer"
+          className="flex bg-slate-800 rounded-lg w-64 h-32 drop-shadow-lg hover:drop-shadow-xl shadow-black justify-center items-center text-center cursor-pointer"
           onClick={() => navigate("standings")}
         >
           Standings <br /> (Turnierinstanz noch nicht erstellt!)

@@ -11,9 +11,9 @@ function Events() {
   console.log(eventQuery.data);
 
   return (
-    <div className="bg-gray-600 h-screen items-center justify-center flex-col flex">
+    <div className="bg-slate-900 h-screen items-center justify-center flex-col flex">
       <div
-        className=" absolute top-12 left-12 w-20 h-16 bg-gray-500 rounded-3xl flex items-center justify-center cursor-pointer"
+        className=" absolute top-12 left-12 w-20 h-16 bg-slate-800 rounded-3xl flex items-center justify-center cursor-pointer"
         onClick={() => navigate("/")}
       >
         {img.Icons.arrowLeft("w-12 h-12 text-white")}
@@ -21,7 +21,7 @@ function Events() {
       <div className="text-5xl my-8 flex text-white justify-center font-georgia tracking-widest">
         EVENTS
       </div>
-      <div className="w-2/3 pt-4 rounded-lg bg-gray-500 h-full">
+      <div className="w-2/3 pt-4 rounded-lg bg-slate-800 h-full">
         {eventQuery.isSuccess &&
           eventQuery.data.map((event: EventProps) => (
             <EventCard {...event} key={event.eventid} />

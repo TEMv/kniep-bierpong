@@ -1,6 +1,6 @@
 import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { LoginValues, BPTeamValues } from "../types/index";
+import { LoginValues, BPTeamValues, MatchResult } from "../types/index";
 const apiUrl = process.env.REACT_APP_API_URL;
 const token = {
   headers: {
@@ -39,13 +39,43 @@ export const useEditTeam = (bpid: number, queryClient: QueryClient) =>
 
 export const useEnterResult = (bpid: number, queryClient: QueryClient) =>
   useMutation({
-    mutationFn: async ({ winner_id, match_id }: any) => {
+    mutationFn: async ({ winner_id, match_id, cup_diff }: MatchResult) => {
       const res = await axios.post(
         `${apiUrl}/enterresult`,
-        { winner_id: winner_id, match_id: match_id },
+        { winner_id: winner_id, match_id: match_id, cup_diff: cup_diff },
         token
       );
       return res.data;
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["matches", bpid] });
+    },
+  });
+
+export const useStartMatches = (bpid: number, queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: async (match_ids: Array<number>) => {
+      console.log(match_ids);
+      const res = await axios.post(
+        `${apiUrl}/startmatch`,
+        { match_ids: match_ids },
+        token
+      );
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["matches", bpid] });
+    },
+  });
+
+export const useChangeTable = (bpid: number, queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: async (props: { match_id: number; new_table: number }) => {
+      const res = await axios.post(
+        `${apiUrl}/changetable`,
+        { match_id: props.match_id, new_table: props.new_table },
+        token
+      );
     },
     onSuccess: () => {
       queryClient.refetchQueries({ queryKey: ["matches", bpid] });

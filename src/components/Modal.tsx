@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ModalContentType, BPTeamValues } from "../types";
-import { useEditTeam } from "../hooks/queries";
+import { ModalContentType, BPTeamValues, TischState } from "../types";
+import { useEditTeam, useEnterResult, useChangeTable } from "../hooks/queries";
 import { useQueryClient } from "@tanstack/react-query";
 function Modal(props: {
   modalVisible: boolean;
@@ -9,13 +9,20 @@ function Modal(props: {
   data: any;
   type: ModalContentType;
   bpid: number;
+  overtimeTables?: Array<TischState>;
 }) {
+  const overtimeTablesFree =
+    !!props.overtimeTables &&
+    (props.overtimeTables[0].status === "free" ||
+      props.overtimeTables[1].status === "free");
   const [content, setContent] = useState(<></>);
   const [inputEdited, setInputEdited] = useState<boolean>(false);
-  const [t1winner, setT1Winner] = useState<boolean>();
+  const [t1winner, setT1Winner] = useState<boolean>(true);
   const [cupDiff, setCupDiff] = useState<number>(1);
   const queryClient = useQueryClient();
+  const resultMutation = useEnterResult(props.bpid, queryClient);
   const editTeamMutation = useEditTeam(props.bpid, queryClient);
+  const changeTable = useChangeTable(props.bpid, queryClient);
   const [inputVisible, setInputVisible] = useState<boolean>(false);
   const [inputValues, setInputValues] = useState<BPTeamValues>({
     teamname: { value: "", status: "valid" },
@@ -23,10 +30,12 @@ function Modal(props: {
     p2: { value: "", status: "valid" },
     ids: { team: 0, p1: 0, p2: 0 },
   });
+
   useEffect(() => {
     setT1Winner(true);
     setCupDiff(1);
   }, [props.modalVisible]);
+
   useEffect(() => {
     switch (props.type) {
       case "edit-teams":
@@ -139,33 +148,47 @@ function Modal(props: {
             <div className="flex items-center justify-evenly w-160">
               <div
                 onClick={() => setT1Winner(true)}
-                className={`rounded-lg flex cursor-pointer text-center justify-center items-center h-20 w-80 px-2 py-1 m-2 ${
+                className={`rounded-lg flex text-3xl cursor-pointer text-center justify-center items-center h-16 w-80 px-2  m-2 ${
                   t1winner ? "bg-emerald-700" : "bg-slate-700"
                 }`}
               >
-                {props.data?.teams?.team1?.teamname}
+                <span>{props.data?.teams?.team1?.teamname}</span>
               </div>
               <div>-</div>
               <div
                 onClick={() => setT1Winner(false)}
-                className={`rounded-lg flex cursor-pointer text-center justify-center items-center grow h-20 px-2 py-1 m-2 ${
+                className={`rounded-lg flex text-3xl cursor-pointer text-center justify-center items-center h-16 w-80 px-2  m-2 ${
                   t1winner ? "bg-slate-700" : "bg-emerald-700"
                 }`}
               >
-                {props.data?.teams?.team2?.teamname}
+                <div>{props.data?.teams?.team2?.teamname}</div>
               </div>
             </div>
-            <div className="flex items-center justify-start w-160">
-              <div className={`w-80 m-2`}>
-                Becherdifferenz:
+            <div className="flex flex-row w-160 mt-8">
+              <div
+                className={`rounded-lg border border-slate-700 p-1 text-2xl w-80 m-2`}
+              >
+                Becherdifferenz
                 <input
                   type="number"
                   min={1}
                   max={10}
                   value={cupDiff}
                   onChange={(e) => setCupDiff(+e.target.value)}
-                  className={`w-16 text-slate-800 ml-2 px-2 py-1 rounded-lg`}
+                  className={`w-20 text-slate-800 text-center  ml-8 px-2 py-1 rounded-lg`}
                 />
+              </div>
+              <div
+                onClick={() =>
+                  overtimeTablesFree
+                    ? sendToOvertime(props.data?.match?.match_id)
+                    : null
+                }
+                className={` flex text-3xl items-center justify-center w-80 rounded-lg grow m-2 bg-red-500 ${
+                  overtimeTablesFree ? "cursor-pointer" : "cursor-not-allowed"
+                }`}
+              >
+                <div>Overtime</div>
               </div>
             </div>
           </div>
@@ -181,6 +204,15 @@ function Modal(props: {
       console.log("CupDiff invalid");
       return;
     }
+
+    resultMutation.mutate({
+      winner_id: t1winner
+        ? props.data?.teams?.team1?.teamid
+        : props.data?.teams?.team2?.teamid,
+      match_id: props.data?.match?.match_id,
+      cup_diff: cupDiff,
+    });
+    props.setModalVisible(false);
   }
 
   /*
@@ -205,6 +237,23 @@ function Modal(props: {
     });
     setInputVisible(true);
   };
+
+  function sendToOvertime(match_id: number) {
+    console.log(match_id);
+    let new_table = -1;
+    if (!!props.overtimeTables) {
+      if (props.overtimeTables[0].status === "free") {
+        new_table = props.overtimeTables[0].tisch_nr;
+      } else if (props.overtimeTables[1].status === "free") {
+        new_table = props.overtimeTables[1].tisch_nr;
+      }
+    }
+    if (new_table > 0) {
+      changeTable.mutate({ match_id: match_id, new_table: new_table });
+      props.setModalVisible(false);
+    }
+  }
+
   const handleInput = (value: string, id: string) => {
     setInputEdited(true);
     setInputValues({ ...inputValues, [id]: { value: value, status: "valid" } });

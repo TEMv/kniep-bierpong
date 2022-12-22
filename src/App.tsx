@@ -18,7 +18,7 @@ import { useEvents } from "./hooks/queries";
 function App() {
   const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
   const isEmpty =
-    !storedUser &&
+    storedUser &&
     Object.keys(storedUser).length === 0 &&
     Object.getPrototypeOf(storedUser) === Object.prototype;
 

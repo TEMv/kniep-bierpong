@@ -89,6 +89,11 @@ type TischState = {
   tisch_nr: number;
   match_id: number;
 };
+type MatchResult = {
+  match_id: number;
+  winner_id: number;
+  cup_diff: number;
+};
 export {
   User,
   EventProps,
@@ -102,4 +107,5 @@ export {
   BPTables,
   TableRow,
   TischState,
+  MatchResult,
 };

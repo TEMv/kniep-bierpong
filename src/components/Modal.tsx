@@ -23,7 +23,10 @@ function Modal(props: {
     p2: { value: "", status: "valid" },
     ids: { team: 0, p1: 0, p2: 0 },
   });
-
+  useEffect(() => {
+    setT1Winner(true);
+    setCupDiff(1);
+  }, [props.modalVisible]);
   useEffect(() => {
     switch (props.type) {
       case "edit-teams":
@@ -136,7 +139,7 @@ function Modal(props: {
             <div className="flex items-center justify-evenly w-160">
               <div
                 onClick={() => setT1Winner(true)}
-                className={`rounded-lg flex cursor-pointer justify-center w-80 px-2 py-1 m-2 ${
+                className={`rounded-lg flex cursor-pointer text-center justify-center items-center h-20 w-80 px-2 py-1 m-2 ${
                   t1winner ? "bg-emerald-700" : "bg-slate-700"
                 }`}
               >
@@ -145,7 +148,7 @@ function Modal(props: {
               <div>-</div>
               <div
                 onClick={() => setT1Winner(false)}
-                className={`rounded-lg flex cursor-pointer justify-center w-80 px-2 py-1 m-2 ${
+                className={`rounded-lg flex cursor-pointer text-center justify-center items-center grow h-20 px-2 py-1 m-2 ${
                   t1winner ? "bg-slate-700" : "bg-emerald-700"
                 }`}
               >
@@ -181,7 +184,7 @@ function Modal(props: {
   }
 
   /*
-    TODO: Finish Submit Results, api erweitern
+    TODO: Finish Submit Results, api erweitern, an Overtime Button denken!
     DANN: TESTEN! ersten 32 matches durchspielen und fehler finden
     DANN: Bei Erfolg: Nach 16 matches in Gruppenphase neue Begegnungen generieren. 
     DANN: Testen, GANZE Gruppenphase durchspielen

@@ -12,8 +12,9 @@ function Modal(props: {
 }) {
   const [content, setContent] = useState(<></>);
   const [inputEdited, setInputEdited] = useState<boolean>(false);
+  const [t1winner, setT1Winner] = useState<boolean>();
+  const [cupDiff, setCupDiff] = useState<number>(1);
   const queryClient = useQueryClient();
-
   const editTeamMutation = useEditTeam(props.bpid, queryClient);
   const [inputVisible, setInputVisible] = useState<boolean>(false);
   const [inputValues, setInputValues] = useState<BPTeamValues>({
@@ -129,10 +130,64 @@ function Modal(props: {
           );
         }
         break;
+      case "enter-results":
+        setContent(
+          <div className="flex flex-col">
+            <div className="flex items-center justify-evenly w-160">
+              <div
+                onClick={() => setT1Winner(true)}
+                className={`rounded-lg flex cursor-pointer justify-center w-80 px-2 py-1 m-2 ${
+                  t1winner ? "bg-emerald-700" : "bg-slate-700"
+                }`}
+              >
+                {props.data?.teams?.team1?.teamname}
+              </div>
+              <div>-</div>
+              <div
+                onClick={() => setT1Winner(false)}
+                className={`rounded-lg flex cursor-pointer justify-center w-80 px-2 py-1 m-2 ${
+                  t1winner ? "bg-slate-700" : "bg-emerald-700"
+                }`}
+              >
+                {props.data?.teams?.team2?.teamname}
+              </div>
+            </div>
+            <div className="flex items-center justify-start w-160">
+              <div className={`w-80 m-2`}>
+                Becherdifferenz:
+                <input
+                  type="number"
+                  min={1}
+                  max={10}
+                  value={cupDiff}
+                  onChange={(e) => setCupDiff(+e.target.value)}
+                  className={`w-16 text-slate-800 ml-2 px-2 py-1 rounded-lg`}
+                />
+              </div>
+            </div>
+          </div>
+        );
+        break;
       default:
         break;
     }
-  }, [props.type, props.data]);
+  }, [props.type, props.data, t1winner, cupDiff]);
+
+  function submitResult() {
+    if (cupDiff < 1 || cupDiff > 10) {
+      console.log("CupDiff invalid");
+      return;
+    }
+  }
+
+  /*
+    TODO: Finish Submit Results, api erweitern
+    DANN: TESTEN! ersten 32 matches durchspielen und fehler finden
+    DANN: Bei Erfolg: Nach 16 matches in Gruppenphase neue Begegnungen generieren. 
+    DANN: Testen, GANZE Gruppenphase durchspielen
+    DANN: Bei Erfolg, Abläufe für KO-Phase definieren, Qualifiziert / Nicht Qualifiziert grün / rot markieren, bei rausfliegen in 
+          KO Phase entsprechend einfärben!
+   */
 
   const openTeam = (entry: any) => {
     setInputValues({
@@ -215,6 +270,15 @@ function Modal(props: {
                   >
                     Schliessen
                   </button>
+                  {props.type === "enter-results" && (
+                    <button
+                      className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => submitResult()}
+                    >
+                      Abschicken
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

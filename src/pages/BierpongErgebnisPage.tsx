@@ -19,7 +19,11 @@ function BierpongErgebnisPage(props: EventProps) {
         <Table data={tableState.tableB} title="Gruppe B" />
       </div>
       <div className="grow">
-        <MatchEditor matches={matches.data} />
+        <MatchEditor
+          matches={matches.data}
+          bpid={props.eventid}
+          teams={teams.data}
+        />
       </div>
       <div className="flex flex-col justify-between py-4">
         <Table data={tableState.tableC} title="Gruppe C" />

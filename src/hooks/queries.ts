@@ -37,6 +37,21 @@ export const useEditTeam = (bpid: number, queryClient: QueryClient) =>
     },
   });
 
+export const useEnterResult = (bpid: number, queryClient: QueryClient) =>
+  useMutation({
+    mutationFn: async ({ winner_id, match_id }: any) => {
+      const res = await axios.post(
+        `${apiUrl}/enterresult`,
+        { winner_id: winner_id, match_id: match_id },
+        token
+      );
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["matches", bpid] });
+    },
+  });
+
 export const useTeams = (id: number, enabled: boolean) =>
   useQuery({
     queryKey: ["teams", id],

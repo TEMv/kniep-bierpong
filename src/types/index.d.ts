@@ -52,11 +52,11 @@ type BPPlayer = {
 };
 type BPTeamResponse = {
   group: number;
-  players: [p1: BPPlayer, p2: BPPlayer];
+  players: { p1: BPPlayer; p2: BPPlayer };
   teamid: number;
   teamname: string;
 };
-type ModalContentType = "edit-teams" | "add-missing-teams";
+type ModalContentType = "edit-teams" | "add-missing-teams" | "enter-results";
 
 type BPMatch = {
   match_id: number;
@@ -84,6 +84,11 @@ type BPTables = {
   tableC: Array<TableRow>;
   tableD: Array<TableRow>;
 };
+type TischState = {
+  status: "free" | "reserved" | "active";
+  tisch_nr: number;
+  match_id: number;
+};
 export {
   User,
   EventProps,
@@ -96,4 +101,5 @@ export {
   BPMatch,
   BPTables,
   TableRow,
+  TischState,
 };

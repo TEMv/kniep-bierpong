@@ -1,34 +1,36 @@
-import { BPMatch } from "../../types";
-import { useEffect, useState } from "react";
-function MatchEditor(props: { matches: Array<BPMatch> }) {
-  const [activeMatches, setActiveMatches] = useState<Array<BPMatch>>(
-    props.matches?.slice(0, 16)
-  );
-  //get first 16 games that are not done yet
-  function getActiveMatches() {
-    let tempMatchArr = [];
-
-    for (let i = 0; i < props.matches?.length; i++) {
-      if (!props.matches[i].end_ts) {
-        tempMatchArr.push(props.matches[i]);
-      }
-      if (tempMatchArr.length === 16) {
-        break;
-      }
-    }
-    setActiveMatches(tempMatchArr);
-  }
-
-  useEffect(() => {
-    getActiveMatches();
-  }, [props.matches]);
+import { BPMatch, BPTeamResponse } from "../../types";
+import { useTischState } from "../../hooks/tische";
+import Modal from "../Modal";
+import { useState } from "react";
+function MatchEditor(props: {
+  matches: Array<BPMatch>;
+  teams: Array<BPTeamResponse>;
+  bpid: number;
+}) {
+  const tische = useTischState(props.matches);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [currentModalData, setCurrentModalData] = useState({
+    match: {},
+    teams: { team1: {}, team2: {} },
+  });
   /*
-  TODO: State der Tische erfassen mit tischnr, state (frei, occupied, game running), matchid falls occ oder running
-  DANN: Auf Basis von Tische State die freien Tische mit den nächsten Matches auffüllen, Tisch 17 18 beachten bei Verlängerung
+  TODO: State der Tische erfassen mit tischnr, state (frei, occupied, game running), matchid falls occ oder running DONE
+  DANN: Auf Basis von Tische State die freien Tische mit den nächsten Matches auffüllen, Tisch 17 18 beachten bei Verlängerung DONE
   DANN: Bei richtig zugeordneten Tischen -> Matches vernünftig anzeigen und Startbutton -> start timestamp in DB, 
         danach Ergebnis in Modal eintragen
   DANN: Bei Ergebnis Tisch state verändern und Tischzuordnung laufen lassen etc.
+
   */
+  function openModal(matchid: number) {
+    let match = props.matches.filter((match) => match.match_id === matchid)[0];
+    let team1 = props.teams.filter((team) => team.teamid === match.team1_id)[0];
+    let team2 = props.teams.filter((team) => team.teamid === match.team2_id)[0];
+    setCurrentModalData({
+      match: match,
+      teams: { team1: team1, team2: team2 },
+    });
+    setModalVisible(true);
+  }
   return (
     <div className="text-white text-3xl py-4 flex flex-col items-center  h-screen">
       <h1>MATCHEDITOR</h1>
@@ -36,77 +38,92 @@ function MatchEditor(props: { matches: Array<BPMatch> }) {
       <div className="flex w-full justify-between h-full">
         {/*Left Row */}
         <div className="ml-4 flex justify-evenly flex-col">
-          <div className="w-56 rounded-lg border border-slate-400 h-16 text-base text-center">
-            <div className="border-b border-slate-400">Tisch 1</div>
-            <div className="flex justify-between mx-2 my-2 text-sm">
-              <div>Elfbier</div>
-              <div>-</div>
-              <div>Rossko</div>
-            </div>
-          </div>
-          <div className="w-56 rounded-lg border border-slate-400 h-16 text-base text-center">
-            <div className="border-b border-slate-400">Tisch 2</div>
-            <div className="flex justify-between mx-2 text-sm ">
-              <div className=" line-clamp-2 w-24 pr-2"> 2 Monkeys 1 Sieg</div>
-              <div>-</div>
-              <div className=" line-clamp-2 w-24 pl-2">
-                colakornistbesseralstee
+          {tische.slice(0, 8).map((tisch, index) => (
+            <div
+              className="w-64 bg-slate-800 rounded-lg border border-slate-400 h-20 text-base text-center cursor-pointer"
+              key={index}
+              onClick={() => openModal(tisch.match_id)}
+            >
+              <div className="border-b flex justify-center items-center border-slate-400 h-8">
+                Tisch {index + 1}
+              </div>
+              <div className="flex justify-between h-12 items-center mx-2 text-sm ">
+                <div className=" line-clamp-2 w-28 pr-2">
+                  {
+                    props.teams?.filter(
+                      (team) =>
+                        team.teamid ===
+                        props.matches?.filter(
+                          (match) => match.match_id === tisch.match_id
+                        )[0]?.team1_id
+                    )[0]?.teamname
+                  }
+                </div>
+                <div>-</div>
+                <div className=" line-clamp-2 w-28 pl-2">
+                  {
+                    props.teams?.filter(
+                      (team) =>
+                        team.teamid ===
+                        props.matches?.filter(
+                          (match) => match.match_id === tisch.match_id
+                        )[0]?.team2_id
+                    )[0]?.teamname
+                  }
+                </div>
               </div>
             </div>
-          </div>
-          <div className="w-56 rounded-lg border border-slate-400 h-16 text-base text-center">
-            <div className="border-b border-slate-400">Tisch 3</div>
-            <div>Elfbier - Rossko</div>
-          </div>
-          <div className="w-56 rounded-lg border border-slate-400 h-16 text-base text-center">
-            <div className="border-b border-slate-400">Tisch 4</div>
-            <div>Elfbier - Rossko</div>
-          </div>
-          <div className="w-56 rounded-lg border border-slate-400 h-16 text-base text-center">
-            <div className="border-b border-slate-400">Tisch 5</div>
-            <div>Elfbier - Rossko</div>
-          </div>
-          <div className="w-56 rounded-lg border border-slate-400 h-16 text-base text-center">
-            <div className="border-b border-slate-400">Tisch 6</div>
-            <div>Elfbier - Rossko</div>
-          </div>
-          <div className="w-56 rounded-lg border border-slate-400 h-16 text-base text-center">
-            <div className="border-b border-slate-400">Tisch 7</div>
-            <div>Elfbier - Rossko</div>
-          </div>
-          <div className="w-56 rounded-lg border border-slate-400 h-16 text-base text-center">
-            <div className="border-b border-slate-400">Tisch 8</div>
-            <div>Elfbier - Rossko</div>
-          </div>
+          ))}
         </div>
         {/*Middle Row */}
-        <div>Mid</div>
+        <div>
+          <Modal
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            title="Ergebnis eintragen"
+            type="enter-results"
+            bpid={props.bpid}
+            data={currentModalData}
+          />
+        </div>
         {/*Right Row */}
         <div className="mr-4 flex justify-evenly flex-col">
-          <div className="w-40 bg-red-500 h-16 text-base text-center">
-            Tisch 9
-          </div>
-          <div className="w-40 bg-red-500 h-16 text-base text-center">
-            Tisch 10
-          </div>
-          <div className="w-40 bg-red-500 h-16 text-base text-center">
-            Tisch 11
-          </div>
-          <div className="w-40 bg-red-500 h-16 text-base text-center">
-            Tisch 12
-          </div>
-          <div className="w-40 bg-red-500 h-16 text-base text-center">
-            Tisch 13
-          </div>
-          <div className="w-40 bg-red-500 h-16 text-base text-center">
-            Tisch 14
-          </div>
-          <div className="w-40 bg-red-500 h-16 text-base text-center">
-            Tisch 15
-          </div>
-          <div className="w-40 bg-red-500 h-16 text-base text-center">
-            Tisch 16
-          </div>
+          {tische.slice(8, 16).map((tisch, index) => (
+            <div
+              className="w-64 bg-slate-800 rounded-lg border cursor-pointer border-slate-400 h-20 text-base text-center"
+              key={index + 8}
+              onClick={() => openModal(tisch.match_id)}
+            >
+              <div className="border-b border-slate-400 h-8">
+                Tisch {index + 9}
+              </div>
+              <div className="flex justify-between h-12 items-center mx-2 text-sm ">
+                <div className=" line-clamp-2 w-28 pr-2">
+                  {
+                    props.teams?.filter(
+                      (team) =>
+                        team.teamid ===
+                        props.matches?.filter(
+                          (match) => match.match_id === tisch.match_id
+                        )[0]?.team1_id
+                    )[0]?.teamname
+                  }
+                </div>
+                <div>-</div>
+                <div className=" line-clamp-2 w-28 pl-2">
+                  {
+                    props.teams?.filter(
+                      (team) =>
+                        team.teamid ===
+                        props.matches?.filter(
+                          (match) => match.match_id === tisch.match_id
+                        )[0]?.team2_id
+                    )[0]?.teamname
+                  }
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

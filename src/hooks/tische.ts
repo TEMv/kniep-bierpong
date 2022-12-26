@@ -15,30 +15,15 @@ export function useTischState(matches: Array<BPMatch>) {
             if (matches[match].end_ts) {
               continue;
             }
-            if (matches[match].start_ts) {
-              tempTische[tisch].status = "active";
-              tempTische[tisch].match_id = matches[match].match_id;
-              break;
-            } else {
-              tempTische[tisch].status = "reserved";
-              tempTische[tisch].match_id = matches[match].match_id;
-              break;
-            }
+            tempTische[tisch].status = "reserved";
+            tempTische[tisch].match_id = matches[match].match_id;
+            break;
           }
         }
       } else if (tempTische[tisch].status === "reserved") {
-        let reserved_match: BPMatch = matches.filter(
-          (match) => match.match_id === tempTische[tisch].match_id
-        )[0];
-        if (reserved_match.start_ts) {
-          tempTische[tisch].status = "active";
-        }
-      } else if (tempTische[tisch].status === "active") {
         let active_match: BPMatch = matches.filter(
           (match) => match.match_id === tempTische[tisch].match_id
         )[0];
-
-        console.log(active_match);
         if (
           active_match.end_ts ||
           active_match.table_id !== tempTische[tisch].tisch_nr
@@ -51,17 +36,11 @@ export function useTischState(matches: Array<BPMatch>) {
                 // beendete skippen
                 continue;
               }
-              if (matches[match].start_ts) {
-                //wenn schon gestartet und gleicher tisch (eig unlogisch)
-                tempTische[tisch].status = "active";
-                tempTische[tisch].match_id = matches[match].match_id;
-                break;
-              } else {
-                // nächstes match queuen
-                tempTische[tisch].status = "reserved";
-                tempTische[tisch].match_id = matches[match].match_id;
-                break;
-              }
+
+              // nächstes match queuen
+              tempTische[tisch].status = "reserved";
+              tempTische[tisch].match_id = matches[match].match_id;
+              break;
             }
           }
           if (active_match.match_id === tempTische[tisch].match_id) {

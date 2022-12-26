@@ -1,6 +1,7 @@
 import { EventProps } from "../types";
 import { useTeams, useMatches } from "../hooks/queries";
 import { useTableState } from "../hooks/tableState";
+import { useNextGames } from "../hooks/nextGames";
 import Table from "../components/Table";
 import MatchEditor from "../components/admin/MatchEditor";
 function BierpongErgebnisPage(props: EventProps) {
@@ -11,12 +12,18 @@ function BierpongErgebnisPage(props: EventProps) {
     matches.data,
     teams.isSuccess && matches.isSuccess
   );
-
+  useNextGames(
+    teams.data,
+    matches.data,
+    tableState,
+    props.eventid,
+    teams.isSuccess && matches.isSuccess && tableState.tableA.length > 0
+  );
   return (
     <div className="h-screen justify-between flex bg-slate-900">
       <div className="flex flex-col justify-between py-4">
         <Table data={tableState.tableA} title="Gruppe A" />
-        <Table data={tableState.tableB} title="Gruppe B" />
+        <Table data={tableState.tableC} title="Gruppe C" />
       </div>
       <div className="grow">
         <MatchEditor
@@ -26,7 +33,7 @@ function BierpongErgebnisPage(props: EventProps) {
         />
       </div>
       <div className="flex flex-col justify-between py-4">
-        <Table data={tableState.tableC} title="Gruppe C" />
+        <Table data={tableState.tableB} title="Gruppe B" />
         <Table data={tableState.tableD} title="Gruppe D" />
       </div>
     </div>

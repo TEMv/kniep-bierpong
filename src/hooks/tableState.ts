@@ -51,10 +51,8 @@ export function useTableState(
     });
 
     /*
-    TODO: Test SPielergebnisse eintragen und gucken, ob games richtig evaluiert werden DONE
-    DANN: Tabellen nach Siegen und Becherdifferenzen Sortieren DONE
-    DANN: Alg zum Bestimmen der nächsten Spiele schreiben (Nach sortiertem Array und schauen, ob schon mal gegeneinander gespielt)
-
+      NEUE TODOS: 
+      Gruppenphasenspiele abfangen ( Gruppe 5 oder so), dann den Verlierer auf "out_in_ko" true setzen für farbige Tabelle
     */
   }
 
@@ -78,6 +76,7 @@ export function useTableState(
         wins: 0,
         losses: 0,
         cup_diff: 0,
+        out_in_ko: false,
       };
     });
     let tempGroupB: Array<TableRow> = groupB.map((team) => {
@@ -87,6 +86,7 @@ export function useTableState(
         wins: 0,
         losses: 0,
         cup_diff: 0,
+        out_in_ko: false,
       };
     });
     let tempGroupC: Array<TableRow> = groupC.map((team) => {
@@ -96,6 +96,7 @@ export function useTableState(
         wins: 0,
         losses: 0,
         cup_diff: 0,
+        out_in_ko: false,
       };
     });
     let tempGroupD: Array<TableRow> = groupD.map((team) => {
@@ -105,6 +106,7 @@ export function useTableState(
         wins: 0,
         losses: 0,
         cup_diff: 0,
+        out_in_ko: false,
       };
     });
     return { tempGroupA, tempGroupB, tempGroupC, tempGroupD };
@@ -132,6 +134,7 @@ export function useTableState(
         wins: winner_entry.wins + 1,
         losses: winner_entry.losses,
         cup_diff: winner_entry.cup_diff + cup_diff,
+        out_in_ko: false,
       };
       let loser_entry: TableRow = group.filter(
         (team) => team.teamid === loser_id
@@ -142,6 +145,7 @@ export function useTableState(
         wins: loser_entry.wins,
         losses: loser_entry.losses + 1,
         cup_diff: loser_entry.cup_diff - cup_diff,
+        out_in_ko: false,
       };
       for (let team in group) {
         if (group[team].teamid === winner_entry.teamid) {

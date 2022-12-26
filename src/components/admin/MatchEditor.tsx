@@ -2,8 +2,6 @@ import { BPMatch, BPTeamResponse } from "../../types";
 import { useTischState } from "../../hooks/tische";
 import Modal from "../Modal";
 import { useState } from "react";
-import img from "../../assets/index";
-import { useStartMatches } from "../../hooks/queries";
 import { useQueryClient } from "@tanstack/react-query";
 function MatchEditor(props: {
   matches: Array<BPMatch>;
@@ -17,7 +15,6 @@ function MatchEditor(props: {
     match: {},
     teams: { team1: {}, team2: {} },
   });
-  const startMatchesMut = useStartMatches(props.bpid, queryClient);
   /*
   TODO: State der Tische erfassen mit tischnr, state (frei, occupied, game running), matchid falls occ oder running DONE
   DANN: Auf Basis von Tische State die freien Tische mit den nächsten Matches auffüllen, Tisch 17 18 beachten bei Verlängerung DONE
@@ -36,16 +33,11 @@ function MatchEditor(props: {
     });
     setModalVisible(true);
   }
-  function handleMatchClick(matchid: number, status: string) {
-    if (status === "reserved") {
-      startMatches([matchid]);
-    } else if (status === "active") {
-      openModal(matchid);
-    }
+  function handleMatchClick(matchid: number) {
+    if (matchid === -1) return;
+    openModal(matchid);
   }
-  function startMatches(matchids: Array<number>) {
-    startMatchesMut.mutate(matchids);
-  }
+
   return (
     <div className="text-white text-4xl py-4 flex flex-col items-center  h-screen">
       <h1>MATCHEDITOR</h1>
@@ -57,13 +49,8 @@ function MatchEditor(props: {
             <div
               className="w-64 bg-slate-800 relative rounded-lg border border-slate-400 h-20 text-base text-center cursor-pointer"
               key={index}
-              onClick={() => handleMatchClick(tisch.match_id, tisch.status)}
+              onClick={() => handleMatchClick(tisch.match_id)}
             >
-              {tisch.status === "reserved" && (
-                <div className="opacity-95 rounded-lg fixed w-64 text-2xl h-20 flex items-center justify-center z-10 bg-slate-800">
-                  {img.Icons.play("h-8 w-8 mr-4 text-white")} Starten
-                </div>
-              )}
               <div className="border-b flex justify-center items-center border-slate-400 h-8">
                 Tisch {index + 1}
               </div>
@@ -106,29 +93,13 @@ function MatchEditor(props: {
             data={currentModalData}
             overtimeTables={tische.slice(16, 18)}
           />
-          <div
-            className="flex text-lg rounded-lg mb-32 bg-slate-800 p-2 cursor-pointer"
-            onClick={() =>
-              startMatches(
-                tische
-                  .filter((tisch) => tisch.status === "reserved")
-                  .map((tisch) => tisch.match_id)
-              )
-            }
-          >
-            {img.Icons.play("h-8 w-8 mr-4 text-white")} Alle Spiele starten
-          </div>
+
           {tische.slice(16, 18).map((tisch, index) => (
             <div
               className="w-64 bg-slate-800 mb-6 relative rounded-lg border border-slate-400 h-20 text-base text-center cursor-pointer"
               key={index}
-              onClick={() => handleMatchClick(tisch.match_id, tisch.status)}
+              onClick={() => handleMatchClick(tisch.match_id)}
             >
-              {tisch.status === "reserved" && (
-                <div className="opacity-95 rounded-lg fixed w-64 text-2xl h-20 flex items-center justify-center z-10 bg-slate-800">
-                  {img.Icons.play("h-8 w-8 mr-4 text-white")} Starten
-                </div>
-              )}
               <div className="border-b flex justify-center items-center border-slate-400 h-8">
                 Tisch {index + 17}
               </div>
@@ -166,13 +137,8 @@ function MatchEditor(props: {
             <div
               className="w-64 bg-slate-800 rounded-lg border cursor-pointer border-slate-400 h-20 text-base text-center"
               key={index + 8}
-              onClick={() => handleMatchClick(tisch.match_id, tisch.status)}
+              onClick={() => handleMatchClick(tisch.match_id)}
             >
-              {tisch.status === "reserved" && (
-                <div className="opacity-95 rounded-lg fixed w-64 text-2xl h-20 flex items-center justify-center z-10 bg-slate-800">
-                  {img.Icons.play("h-8 w-8 mr-4 text-white")} Starten
-                </div>
-              )}
               <div className="border-b border-slate-400 h-8">
                 Tisch {index + 9}
               </div>

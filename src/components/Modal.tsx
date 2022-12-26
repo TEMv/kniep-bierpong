@@ -148,7 +148,7 @@ function Modal(props: {
             <div className="flex items-center justify-evenly w-160">
               <div
                 onClick={() => setT1Winner(true)}
-                className={`rounded-lg flex text-3xl cursor-pointer text-center justify-center items-center h-16 w-80 px-2  m-2 ${
+                className={`rounded-lg flex text-3xl cursor-pointer border border-slate-700 text-center justify-center items-center h-16 w-80 px-2  m-2 ${
                   t1winner ? "bg-emerald-700" : "bg-slate-700"
                 }`}
               >
@@ -157,7 +157,7 @@ function Modal(props: {
               <div>-</div>
               <div
                 onClick={() => setT1Winner(false)}
-                className={`rounded-lg flex text-3xl cursor-pointer text-center justify-center items-center h-16 w-80 px-2  m-2 ${
+                className={`rounded-lg flex text-3xl cursor-pointer border border-slate-700 text-center justify-center items-center h-16 w-80 px-2  m-2 ${
                   t1winner ? "bg-slate-700" : "bg-emerald-700"
                 }`}
               >
@@ -184,7 +184,7 @@ function Modal(props: {
                     ? sendToOvertime(props.data?.match?.match_id)
                     : null
                 }
-                className={` flex text-3xl items-center justify-center w-80 rounded-lg grow m-2 bg-red-500 ${
+                className={` flex text-3xl border border-slate-700 items-center justify-center w-80 rounded-lg grow m-2 bg-red-500 ${
                   overtimeTablesFree ? "cursor-pointer" : "cursor-not-allowed"
                 }`}
               >
@@ -239,7 +239,6 @@ function Modal(props: {
   };
 
   function sendToOvertime(match_id: number) {
-    console.log(match_id);
     let new_table = -1;
     if (!!props.overtimeTables) {
       if (props.overtimeTables[0].status === "free") {

@@ -65,10 +65,13 @@ type BPMatch = {
   team2_id: number;
   cup_diff?: number;
   winner_id?: number;
-  start_ts?: string;
   end_ts?: string;
   group: number;
   table_id: number;
+};
+
+type GroupBreakpoints = {
+  [key: number]: Array<Array<number>>;
 };
 
 type TableRow = {
@@ -77,6 +80,10 @@ type TableRow = {
   wins: number;
   losses: number;
   cup_diff: number;
+  out_in_ko: boolean;
+};
+type ValidOpponents = {
+  [key: number]: Array<number>;
 };
 type BPTables = {
   tableA: Array<TableRow>;
@@ -85,7 +92,7 @@ type BPTables = {
   tableD: Array<TableRow>;
 };
 type TischState = {
-  status: "free" | "reserved" | "active";
+  status: "free" | "reserved";
   tisch_nr: number;
   match_id: number;
 };
@@ -108,4 +115,6 @@ export {
   TableRow,
   TischState,
   MatchResult,
+  GroupBreakpoints,
+  ValidOpponents,
 };

@@ -1,5 +1,8 @@
 import { TableRow } from "../types";
 function Table(props: { data: Array<TableRow>; title: string }) {
+  function stillIn(row: TableRow) {
+    console.log(row);
+  }
   return (
     <div className={`overflow-x-auto relative `}>
       <span className="text-white text-center flex justify-center text-xl">
@@ -24,10 +27,19 @@ function Table(props: { data: Array<TableRow>; title: string }) {
         </thead>
         <tbody>
           {props.data.map((row, index) => (
-            <tr key={index} className="bg-gray-800 border-b border-gray-700">
+            <tr
+              key={index}
+              className={`bg-gray-800 border-b border-gray-700 ${
+                row.wins === 3
+                  ? "text-emerald-700"
+                  : row.losses === 3
+                  ? "text-red-500"
+                  : "text-white"
+              }`}
+            >
               <th
                 scope="row"
-                className=" px-2 font-medium whitespace-nowrap text-center text-white"
+                className={`px-2 font-medium whitespace-nowrap text-center `}
               >
                 {index + 1}
               </th>

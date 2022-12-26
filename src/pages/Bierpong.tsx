@@ -4,12 +4,10 @@ import img from "../assets/index";
 import { EventProps } from "../types";
 import dayjs from "dayjs";
 function Bierpong(props: EventProps) {
-  console.log(props.eventid);
   const turnier = useEvent("bierpong", props.eventid);
   const teams = useTeams(turnier.data?.bpid, turnier.isSuccess);
   const navigate = useNavigate();
-  console.log(turnier.isSuccess);
-  console.log(teams.isSuccess);
+
   return (
     <div className="bg-slate-900 h-screen flex items-center flex-col">
       <div
@@ -50,7 +48,7 @@ function Bierpong(props: EventProps) {
         <div className="flex bg-slate-800 rounded-lg w-64 h-32 drop-shadow-lg shadow-black justify-center items-center text-center cursor-not-allowed">
           Anmelden <br /> (Anmeldung aktuell nur über Instagram!)
         </div>
-        <span>{"<---XOR---->"}</span>
+        <span>{"<---XOR--->"}</span>
         <div
           className="flex bg-slate-800 rounded-lg w-64 h-32 drop-shadow-lg hover:drop-shadow-xl shadow-black justify-center items-center text-center cursor-pointer"
           onClick={() => navigate("standings")}

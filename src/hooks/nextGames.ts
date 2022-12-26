@@ -6,7 +6,12 @@ import {
   TableRow,
   ValidOpponents,
 } from "../types";
-import { recalcBreakpoints, groupBreakpoints } from "../constants";
+import {
+  recalcBreakpoints,
+  groupBreakpoints,
+  initialKoMatchups,
+  koMatches,
+} from "../constants";
 import { useAddMatches } from "./queries";
 import { useQueryClient } from "@tanstack/react-query";
 export function useNextGames(
@@ -18,6 +23,7 @@ export function useNextGames(
 ) {
   const queryClient = useQueryClient();
   const addMatches = useAddMatches(bpid, queryClient);
+  const [koGamesBuilt, setKoGamesBuilt] = useState(false);
   useEffect(() => {
     if (!enabled) {
       return;
@@ -28,7 +34,7 @@ export function useNextGames(
         console.log(alreadyPlayed(teams[team]));
       }
     }
-  }, [matches, tableState]);
+  }, [tableState]);
   function hasDuplicates(array: Array<number>) {
     return new Set(array).size !== array.length;
   }
@@ -45,33 +51,101 @@ export function useNextGames(
     }
     return played;
   }
+
+  function handleKoGames() {
+    let koGames = matches.filter((match) => match.group >= 10);
+    for (let match in koMatches) {
+      let game1 = koGames.filter(
+        (game) => game.group === koMatches[match].req[0]
+      )[0];
+      let game2 = koGames.filter(
+        (game) => game.group === koMatches[match].req[1]
+      )[0];
+
+      if (
+        game1?.winner_id &&
+        game2?.winner_id &&
+        !koGames.filter((game) => game.group === koMatches[match].id)[0]
+      ) {
+        let newmatch = {
+          match_id: matches.length + 1,
+          bp_id: 1,
+          team1_id: game1?.winner_id,
+          team2_id: game2?.winner_id,
+          group: koMatches[match].id,
+          table_id: koMatches[match].id - 25,
+        };
+        addMatches.mutate({ matches: [newmatch] });
+      }
+    }
+  }
+
   function calcNextGames() {
-    matchupTeams(
-      tableState.tableA,
-      0,
-      checkGroupForRebuild(0, tableState.tableA)
-    );
-    matchupTeams(
-      tableState.tableB,
-      1,
-      checkGroupForRebuild(1, tableState.tableB)
-    );
-    matchupTeams(
-      tableState.tableC,
-      2,
-      checkGroupForRebuild(2, tableState.tableC)
-    );
-    matchupTeams(
-      tableState.tableD,
-      3,
-      checkGroupForRebuild(3, tableState.tableD)
-    );
+    if (
+      matches.filter((match) => match.end_ts).length === 132 &&
+      matches.length === 132
+    ) {
+      buildKoGames();
+    } else if (matches.length > 132) {
+      handleKoGames();
+    } else {
+      matchupTeams(
+        tableState.tableA,
+        0,
+        checkGroupForRebuild(0, tableState.tableA)
+      );
+      matchupTeams(
+        tableState.tableB,
+        1,
+        checkGroupForRebuild(1, tableState.tableB)
+      );
+      matchupTeams(
+        tableState.tableC,
+        2,
+        checkGroupForRebuild(2, tableState.tableC)
+      );
+      matchupTeams(
+        tableState.tableD,
+        3,
+        checkGroupForRebuild(3, tableState.tableD)
+      );
+    }
   }
   /*
 Denkansatz: alle matches durchgehen, für jede gruppe prüfen: noch ungespielte games vorhanden
 Falls ja: nichts tun, falls nein: neuberechnen
 Wenn neuberechnet, in DB schreiben direkt und matches neu fetchen
 */
+
+  function buildKoGames() {
+    if (koGamesBuilt) return;
+    let komatches: Array<BPMatch> = [];
+    const tableStateMap = [
+      tableState.tableA,
+      tableState.tableB,
+      tableState.tableC,
+      tableState.tableD,
+    ];
+    for (let matchup in initialKoMatchups) {
+      komatches.push({
+        match_id: matches.length + komatches.length + 1,
+        bp_id: 1,
+        team1_id:
+          tableStateMap[initialKoMatchups[matchup].team1.group][
+            initialKoMatchups[matchup].team1.pos
+          ].teamid,
+        team2_id:
+          tableStateMap[initialKoMatchups[matchup].team2.group][
+            initialKoMatchups[matchup].team2.pos
+          ].teamid,
+        group: 10 + komatches.length,
+        table_id: komatches.length + 1,
+      });
+    }
+    console.log(komatches);
+    addMatches.mutate({ matches: komatches });
+    setKoGamesBuilt(true);
+  }
 
   function newMatchup(
     validOpponentsArr: Array<number>,
@@ -135,76 +209,6 @@ Wenn neuberechnet, in DB schreiben direkt und matches neu fetchen
         tempMatchups = newMatchup(validOpponentsArr, tempMatchups, i);
       }
     }
-    /*if (i + 1 === tempMatchups.length) {
-          for (let k = i - 1; k >= 0; k--) {
-            if (
-              !alreadyPlayed(
-                teams.filter(
-                  (team) => team.teamid === tempMatchups[i].team1_id
-                )[0]
-              ).includes(tempMatchups[k].team2_id) &&
-              !alreadyPlayed(
-                teams.filter(
-                  (team) => team.teamid === tempMatchups[k].team1_id
-                )[0]
-              ).includes(tempMatchups[i].team2_id)
-            ) {
-              let temp = tempMatchups[i].team2_id;
-              tempMatchups[i].team2_id = tempMatchups[k].team2_id;
-              tempMatchups[k].team2_id = temp;
-              console.log(tempMatchups, "fixed in line 86");
-              break;
-            }
-          }
-        } else {
-          for (let k = i + 1; k < tempMatchups.length; k++) {
-            if (
-              !alreadyPlayed(
-                teams.filter(
-                  (team) => team.teamid === tempMatchups[i].team1_id
-                )[0]
-              ).includes(tempMatchups[k].team2_id) &&
-              !alreadyPlayed(
-                teams.filter(
-                  (team) => team.teamid === tempMatchups[k].team1_id
-                )[0]
-              ).includes(tempMatchups[i].team2_id)
-            ) {
-              let temp = tempMatchups[i].team2_id;
-              tempMatchups[i].team2_id = tempMatchups[k].team2_id;
-              tempMatchups[k].team2_id = temp;
-              console.log(tempMatchups, "fixed in line 100");
-              break;
-            } else if (k + 1 === tempMatchups.length) {
-              console.log("K ist letzter Eintrag, schaue 1 vor dupe game");
-              // wenn vorletzter eintrag und letzter auch nicht valide
-              //den eintrag vor i nachschauen (3 tries gesamt), wenn auch nicht possible dann scheiß drauf
-              if (
-                !alreadyPlayed(
-                  teams.filter(
-                    (team) => team.teamid === tempMatchups[i].team1_id
-                  )[0]
-                ).includes(tempMatchups[i - 1].team2_id) &&
-                !alreadyPlayed(
-                  teams.filter(
-                    (team) => team.teamid === tempMatchups[i - 1].team1_id
-                  )[0]
-                ).includes(tempMatchups[i].team2_id)
-              ) {
-                let temp = tempMatchups[i].team2_id;
-                tempMatchups[i].team2_id = tempMatchups[i - 1].team2_id;
-                tempMatchups[i - 1].team2_id = temp;
-                console.log(tempMatchups, "fixed in line 115");
-                break;
-              } else {
-                return tempMatchups;
-              }
-            }
-          }
-        }
-      }
-    }
-    console.log("Lösung alter ansatz: ", tempMatchups);*/
     return tempMatchups;
   }
 

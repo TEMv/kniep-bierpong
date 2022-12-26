@@ -62,24 +62,42 @@ const emptyTische: Array<TischState> = [
   { tisch_nr: 18, status: "free", match_id: -1 },
 ];
 
-const initialKoMatchups = {
-  0: { team1: { group: 0, pos: 0 }, team2: { group: 1, pos: 7 } },
-  1: { team1: { group: 2, pos: 3 }, team2: { group: 3, pos: 4 } },
-  2: { team1: { group: 0, pos: 2 }, team2: { group: 1, pos: 5 } },
-  3: { team1: { group: 3, pos: 1 }, team2: { group: 2, pos: 6 } },
-  4: { team1: { group: 0, pos: 4 }, team2: { group: 1, pos: 3 } },
-  5: { team1: { group: 2, pos: 0 }, team2: { group: 3, pos: 7 } },
-  6: { team1: { group: 0, pos: 6 }, team2: { group: 1, pos: 1 } },
-  7: { team1: { group: 2, pos: 2 }, team2: { group: 3, pos: 5 } },
-  8: { team1: { group: 0, pos: 7 }, team2: { group: 1, pos: 0 } },
-  9: { team1: { group: 2, pos: 4 }, team2: { group: 3, pos: 3 } },
-  10: { team1: { group: 0, pos: 5 }, team2: { group: 1, pos: 2 } },
-  11: { team1: { group: 3, pos: 6 }, team2: { group: 2, pos: 2 } },
-  12: { team1: { group: 0, pos: 3 }, team2: { group: 1, pos: 4 } },
-  13: { team1: { group: 3, pos: 0 }, team2: { group: 2, pos: 7 } },
-  14: { team1: { group: 0, pos: 1 }, team2: { group: 1, pos: 6 } },
-  15: { team1: { group: 3, pos: 2 }, team2: { group: 2, pos: 5 } },
-};
+const initialKoMatchups = [
+  { team1: { group: 0, pos: 0 }, team2: { group: 1, pos: 7 } },
+  { team1: { group: 2, pos: 3 }, team2: { group: 3, pos: 4 } },
+  { team1: { group: 0, pos: 2 }, team2: { group: 1, pos: 5 } },
+  { team1: { group: 3, pos: 1 }, team2: { group: 2, pos: 6 } },
+  { team1: { group: 0, pos: 4 }, team2: { group: 1, pos: 3 } },
+  { team1: { group: 2, pos: 0 }, team2: { group: 3, pos: 7 } },
+  { team1: { group: 0, pos: 6 }, team2: { group: 1, pos: 1 } },
+  { team1: { group: 2, pos: 2 }, team2: { group: 3, pos: 5 } },
+  { team1: { group: 0, pos: 7 }, team2: { group: 1, pos: 0 } },
+  { team1: { group: 2, pos: 4 }, team2: { group: 3, pos: 3 } },
+  { team1: { group: 0, pos: 5 }, team2: { group: 1, pos: 2 } },
+  { team1: { group: 3, pos: 6 }, team2: { group: 2, pos: 2 } },
+  { team1: { group: 0, pos: 3 }, team2: { group: 1, pos: 4 } },
+  { team1: { group: 3, pos: 0 }, team2: { group: 2, pos: 7 } },
+  { team1: { group: 0, pos: 1 }, team2: { group: 1, pos: 6 } },
+  { team1: { group: 3, pos: 2 }, team2: { group: 2, pos: 5 } },
+];
+
+const koMatches = [
+  { req: [10, 11], id: 26 },
+  { req: [12, 13], id: 27 },
+  { req: [14, 15], id: 28 },
+  { req: [16, 17], id: 29 },
+  { req: [18, 19], id: 30 },
+  { req: [20, 21], id: 31 },
+  { req: [22, 23], id: 32 },
+  { req: [24, 25], id: 33 },
+  { req: [26, 27], id: 34 },
+  { req: [28, 29], id: 35 },
+  { req: [30, 31], id: 36 },
+  { req: [32, 33], id: 37 },
+  { req: [34, 35], id: 38 },
+  { req: [36, 37], id: 39 },
+  { req: [38, 39], id: 40 },
+];
 export {
   emptyUser,
   GroupMap,
@@ -87,4 +105,6 @@ export {
   emptyTische,
   recalcBreakpoints,
   groupBreakpoints,
+  initialKoMatchups,
+  koMatches,
 };

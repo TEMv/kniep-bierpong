@@ -20,14 +20,13 @@ export function useTableState(
       calcTables();
     }
   }, [matches, teams]);
-
   function calcTables() {
     //match matches to group
     const matchesA = matches.filter((match) => match.group === 0);
     const matchesB = matches.filter((match) => match.group === 1);
     const matchesC = matches.filter((match) => match.group === 2);
     const matchesD = matches.filter((match) => match.group === 3);
-
+    const koMatches = matches.filter((match) => match.group >= 10);
     //init with right fields
     let { tempGroupA, tempGroupB, tempGroupC, tempGroupD } = initTables();
 
@@ -36,6 +35,12 @@ export function useTableState(
     tempGroupB = evaluateGamesForGroup(matchesB, tempGroupB);
     tempGroupC = evaluateGamesForGroup(matchesC, tempGroupC);
     tempGroupD = evaluateGamesForGroup(matchesD, tempGroupD);
+
+    //calc ko games
+    tempGroupA = evaluateKoGames(koMatches, tempGroupA);
+    tempGroupB = evaluateKoGames(koMatches, tempGroupB);
+    tempGroupC = evaluateKoGames(koMatches, tempGroupC);
+    tempGroupD = evaluateKoGames(koMatches, tempGroupD);
 
     //sort
     tempGroupA = sortTables(tempGroupA);
@@ -61,6 +66,29 @@ export function useTableState(
       (a, b) =>
         b.wins - b.losses - (a.wins - a.losses) || b.cup_diff - a.cup_diff
     );
+  }
+
+  function evaluateKoGames(koMatches: Array<BPMatch>, group: Array<TableRow>) {
+    const tempGroup: Array<TableRow> = JSON.parse(JSON.stringify(group));
+    const tempKoMatches: Array<BPMatch> = JSON.parse(JSON.stringify(koMatches));
+    const finishedGames = tempKoMatches.filter((match) => match.winner_id);
+    for (let game in finishedGames) {
+      for (let row in tempGroup) {
+        let teamid = tempGroup[row].teamid;
+        if (
+          teamid === finishedGames[game].team1_id &&
+          teamid !== finishedGames[game].winner_id
+        ) {
+          tempGroup[row].out_in_ko = true;
+        } else if (
+          teamid === finishedGames[game].team2_id &&
+          teamid !== finishedGames[game].winner_id
+        ) {
+          tempGroup[row].out_in_ko = true;
+        }
+      }
+    }
+    return tempGroup;
   }
 
   function initTables() {

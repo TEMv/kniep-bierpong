@@ -172,24 +172,26 @@ function Modal(props: {
                 <input
                   type="number"
                   min={1}
-                  max={10}
+                  max={6}
                   value={cupDiff}
                   onChange={(e) => setCupDiff(+e.target.value)}
                   className={`w-20 text-slate-800 text-center  ml-8 px-2 py-1 rounded-lg`}
                 />
               </div>
-              <div
-                onClick={() =>
-                  overtimeTablesFree
-                    ? sendToOvertime(props.data?.match?.match_id)
-                    : null
-                }
-                className={` flex text-3xl border border-slate-700 items-center justify-center w-80 rounded-lg grow m-2 bg-red-500 ${
-                  overtimeTablesFree ? "cursor-pointer" : "cursor-not-allowed"
-                }`}
-              >
-                <div>Overtime</div>
-              </div>
+              {props.data?.match?.table_id <= 16 && (
+                <div
+                  onClick={() =>
+                    overtimeTablesFree
+                      ? sendToOvertime(props.data?.match?.match_id)
+                      : null
+                  }
+                  className={` flex text-3xl border border-slate-700 items-center justify-center w-80 rounded-lg grow m-2 bg-red-500 ${
+                    overtimeTablesFree ? "cursor-pointer" : "cursor-not-allowed"
+                  }`}
+                >
+                  <div>Overtime</div>
+                </div>
+              )}
             </div>
           </div>
         );

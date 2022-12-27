@@ -21,9 +21,9 @@ function BierpongErgebnisPage(props: EventProps) {
   );
   return (
     <div className="h-screen justify-between flex bg-slate-900">
-      <div className="flex flex-col justify-between py-4">
-        <Table data={tableState.tableA} title="Gruppe A" />
-        <Table data={tableState.tableC} title="Gruppe C" />
+      <div className="flex flex-col justify-between py-4 ">
+        <Table data={tableState.tableA} title="Gruppe A" size="sm" />
+        <Table data={tableState.tableC} title="Gruppe C" size="sm" />
       </div>
       <div className="grow">
         <MatchEditor
@@ -32,9 +32,9 @@ function BierpongErgebnisPage(props: EventProps) {
           teams={teams.data}
         />
       </div>
-      <div className="flex flex-col justify-between py-4">
-        <Table data={tableState.tableB} title="Gruppe B" />
-        <Table data={tableState.tableD} title="Gruppe D" />
+      <div className="flex flex-col justify-between py-4 ">
+        <Table data={tableState.tableB} title="Gruppe B" size="sm" />
+        <Table data={tableState.tableD} title="Gruppe D" size="sm" />
       </div>
     </div>
   );

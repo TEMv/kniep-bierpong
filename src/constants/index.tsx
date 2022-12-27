@@ -74,7 +74,7 @@ const initialKoMatchups = [
   { team1: { group: 0, pos: 7 }, team2: { group: 1, pos: 0 } },
   { team1: { group: 2, pos: 4 }, team2: { group: 3, pos: 3 } },
   { team1: { group: 0, pos: 5 }, team2: { group: 1, pos: 2 } },
-  { team1: { group: 3, pos: 6 }, team2: { group: 2, pos: 2 } },
+  { team1: { group: 3, pos: 6 }, team2: { group: 2, pos: 1 } },
   { team1: { group: 0, pos: 3 }, team2: { group: 1, pos: 4 } },
   { team1: { group: 3, pos: 0 }, team2: { group: 2, pos: 7 } },
   { team1: { group: 0, pos: 1 }, team2: { group: 1, pos: 6 } },

@@ -13,6 +13,7 @@ export function useTableState(
     tableD: emptyTable,
   });
   useEffect(() => {
+    console.log(tables);
     if (!enabled) {
       return;
     }
@@ -20,6 +21,7 @@ export function useTableState(
       calcTables();
     }
   }, [matches, teams]);
+
   function calcTables() {
     //match matches to group
     const matchesA = matches.filter((match) => match.group === 0);
@@ -27,6 +29,7 @@ export function useTableState(
     const matchesC = matches.filter((match) => match.group === 2);
     const matchesD = matches.filter((match) => match.group === 3);
     const koMatches = matches.filter((match) => match.group >= 10);
+
     //init with right fields
     let { tempGroupA, tempGroupB, tempGroupC, tempGroupD } = initTables();
 
@@ -79,11 +82,13 @@ export function useTableState(
           teamid === finishedGames[game].team1_id &&
           teamid !== finishedGames[game].winner_id
         ) {
+          console.log(tempGroup[row].teamname + "in KO Phase raus");
           tempGroup[row].out_in_ko = true;
         } else if (
           teamid === finishedGames[game].team2_id &&
           teamid !== finishedGames[game].winner_id
         ) {
+          console.log(tempGroup[row].teamname + "in KO Phase raus");
           tempGroup[row].out_in_ko = true;
         }
       }

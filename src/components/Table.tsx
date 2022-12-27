@@ -1,12 +1,24 @@
 import { TableRow } from "../types";
-function Table(props: { data: Array<TableRow>; title: string }) {
+function Table(props: { data: Array<TableRow>; title: string; size: string }) {
   return (
-    <div className={`overflow-x-auto relative `}>
-      <span className="text-white text-center flex justify-center text-xl">
+    <div
+      className={`overflow-x-auto w-full p-2 relative  ${
+        props.size === "lg" && "w-1/2"
+      }`}
+    >
+      <span
+        className={`text-white text-center flex justify-center ${
+          props.size === "lg" ? "text-4xl pb-2" : "text-xl"
+        }`}
+      >
         {props.title}
       </span>
-      <table className=" mx-2  text-sm text-left  text-gray-400">
-        <thead className="text-xs  uppercase  bg-gray-700 text-gray-400">
+      <table
+        className={`text-left w-full text-gray-400 ${
+          props.size === "lg" ? "text-2xl" : "text-sm"
+        }`}
+      >
+        <thead className={`  uppercase  bg-gray-700 text-gray-400 `}>
           <tr>
             <th scope="col" className="py-2 px-2">
               Platz
@@ -32,7 +44,7 @@ function Table(props: { data: Array<TableRow>; title: string }) {
                   : row.losses === 3 || row.out_in_ko
                   ? "text-red-500"
                   : "text-white"
-              } `}
+              } ${props.size === "lg" && "py-8"}`}
             >
               <th
                 scope="row"
@@ -40,7 +52,13 @@ function Table(props: { data: Array<TableRow>; title: string }) {
               >
                 {index + 1}
               </th>
-              <td className=" px-2 truncate max-w-[150px]">{row.teamname}</td>
+              <td
+                className={` px-2 truncate ${
+                  props.size === "sm" && "max-w-[150px]"
+                } ${props.size === "lg" && "py-1"}`}
+              >
+                {row.teamname}
+              </td>
               <td className=" px-2 text-center">{`${row.wins} :  ${row.losses}`}</td>
               <td className=" px-2 text-center">{row.cup_diff}</td>
             </tr>

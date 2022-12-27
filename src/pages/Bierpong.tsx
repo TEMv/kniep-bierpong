@@ -42,18 +42,23 @@ function Bierpong(props: EventProps) {
         </div>
       ) : null}
       <div className="text-3xl py-36 text-white">
-        TODO: INTERESSANTE INFOS ZUM TURNIER
+        Für Turnierregeln und -informationen schaut bitte auf{" "}
+        <a
+          className="text-primary"
+          href="https://www.instagram.com/kniep_amrum/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          INSTAGRAM
+        </a>{" "}
+        vorbei!
       </div>
       <div className="w-full flex justify-evenly text-md text-white">
-        <div className="flex bg-slate-800 rounded-lg w-64 h-32 drop-shadow-lg shadow-black justify-center items-center text-center cursor-not-allowed">
-          Anmelden <br /> (Anmeldung aktuell nur über Instagram!)
-        </div>
-        <span>{"<---XOR--->"}</span>
         <div
-          className="flex bg-slate-800 rounded-lg w-64 h-32 drop-shadow-lg hover:drop-shadow-xl shadow-black justify-center items-center text-center cursor-pointer"
+          className="flex bg-slate-800 rounded-lg text-3xl w-64 h-32 drop-shadow-lg hover:drop-shadow-xl shadow-black justify-center items-center text-center cursor-pointer"
           onClick={() => navigate("standings")}
         >
-          Standings <br /> (Turnierinstanz noch nicht erstellt!)
+          Standings
         </div>
       </div>
     </div>

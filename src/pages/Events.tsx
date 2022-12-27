@@ -21,7 +21,7 @@ function Events() {
       <div className="text-5xl my-8 flex text-white justify-center font-georgia tracking-widest">
         EVENTS
       </div>
-      <div className="w-2/3 pt-4 rounded-lg bg-slate-800 h-full">
+      <div className="w-2/3 pt-4 rounded-lg bg-slate-900 h-full">
         {eventQuery.isSuccess &&
           eventQuery.data.map((event: EventProps) => (
             <EventCard {...event} key={event.eventid} />

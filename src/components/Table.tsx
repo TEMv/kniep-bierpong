@@ -20,16 +20,16 @@ function Table(props: { data: Array<TableRow>; title: string; size: string }) {
       >
         <thead className={`  uppercase  bg-gray-700 text-gray-400 `}>
           <tr>
-            <th scope="col" className="py-2 px-2">
+            <th scope="col" className="py-2 px-2 w-1/12">
               Platz
             </th>
-            <th scope="col" className="py-2 px-2">
+            <th scope="col" className="py-2 px-2 w-7/12">
               Team
             </th>
-            <th scope="col" className="py-2 px-4">
+            <th scope="col" className="py-2 px-4 w-3/12">
               W/L
             </th>
-            <th scope="col" className="py-2 px-2">
+            <th scope="col" className="py-2 px-2 w-1/12">
               Differenz
             </th>
           </tr>
@@ -48,14 +48,16 @@ function Table(props: { data: Array<TableRow>; title: string; size: string }) {
             >
               <th
                 scope="row"
-                className={`px-2 font-medium whitespace-nowrap text-center `}
+                className={`px-2 font-medium whitespace-nowrap text-center ${
+                  props.size === "lg" && "w-1/12"
+                }`}
               >
                 {index + 1}
               </th>
               <td
                 className={` px-2 truncate ${
                   props.size === "sm" && "max-w-[150px]"
-                } ${props.size === "lg" && "py-1"}`}
+                } ${props.size === "lg" && "py-1  w-6/12"}`}
               >
                 {row.teamname}
               </td>

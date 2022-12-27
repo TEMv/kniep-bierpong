@@ -14,6 +14,7 @@ import {
 } from "../constants";
 import { useAddMatches } from "./queries";
 import { useQueryClient } from "@tanstack/react-query";
+import { match } from "assert";
 export function useNextGames(
   teams: Array<BPTeamResponse>,
   matches: Array<BPMatch>,
@@ -250,6 +251,12 @@ Wenn neuberechnet, in DB schreiben direkt und matches neu fetchen
       startTable = 1;
     } else if (group === 2 || group === 3) {
       startTable = 9;
+    }
+    if (matchNum === 30 && group === 1) {
+      startTable = 4;
+    }
+    if (matchNum === 30 && group === 3) {
+      startTable = 12;
     }
     for (let bp in groupBreakpoints[matchNum]) {
       let subtable: Array<TableRow> = tempTable.slice(

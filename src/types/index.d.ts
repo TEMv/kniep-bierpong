@@ -22,6 +22,7 @@ type ImageIndex = {
   LandingPage: { [key: string]: string };
   Videos: { [key: string]: string };
   Icons: { [key: string]: any };
+  Images: { [key: string]: string };
 };
 type LoginValues = {
   username: InputState;
@@ -85,6 +86,9 @@ type TableRow = {
 type ValidOpponents = {
   [key: number]: Array<number>;
 };
+type NextGameMap = {
+  [key: number]: number | null;
+};
 type BPTables = {
   tableA: Array<TableRow>;
   tableB: Array<TableRow>;
@@ -117,4 +121,5 @@ export {
   MatchResult,
   GroupBreakpoints,
   ValidOpponents,
+  NextGameMap,
 };

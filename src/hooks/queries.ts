@@ -129,4 +129,5 @@ export const useMatches = (bpid: number) =>
       const res = await axios.get(`${apiUrl}/matches/${bpid}`, token);
       return res.data;
     },
+    refetchIntervalInBackground: true,
   });

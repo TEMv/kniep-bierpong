@@ -46,7 +46,7 @@ function MatchEditor(props: {
         <div className="ml-4 flex justify-evenly flex-col">
           {tische.slice(0, 8).map((tisch, index) => (
             <div
-              className="w-64 bg-slate-800 relative rounded-lg border border-slate-400 h-20 text-base text-center cursor-pointer"
+              className="w-64 bg-slate-800 relative px-2 rounded-lg border border-slate-400 h-20 text-base text-center cursor-pointer"
               key={index}
               onClick={() => handleMatchClick(tisch.match_id)}
             >
@@ -115,7 +115,7 @@ function MatchEditor(props: {
           <div>
             {tische.slice(16, 18).map((tisch, index) => (
               <div
-                className="w-64 bg-slate-800 mb-6 relative rounded-lg border border-slate-400 h-20 text-base text-center cursor-pointer"
+                className="w-64 bg-slate-800 mb-6 relative px-2 rounded-lg border border-slate-400 h-20 text-base text-center cursor-pointer"
                 key={index}
                 onClick={() => handleMatchClick(tisch.match_id)}
               >
@@ -155,7 +155,7 @@ function MatchEditor(props: {
         <div className="mr-4 flex justify-evenly flex-col">
           {tische.slice(8, 16).map((tisch, index) => (
             <div
-              className="w-64 bg-slate-800 rounded-lg border cursor-pointer border-slate-400 h-20 text-base text-center"
+              className="w-64 bg-slate-800 rounded-lg border px-2 cursor-pointer border-slate-400 h-20 text-base text-center"
               key={index + 8}
               onClick={() => handleMatchClick(tisch.match_id)}
             >

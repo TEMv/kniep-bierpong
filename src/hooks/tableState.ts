@@ -13,7 +13,6 @@ export function useTableState(
     tableD: emptyTable,
   });
   useEffect(() => {
-    console.log(tables);
     if (!enabled) {
       return;
     }
@@ -82,13 +81,11 @@ export function useTableState(
           teamid === finishedGames[game].team1_id &&
           teamid !== finishedGames[game].winner_id
         ) {
-          console.log(tempGroup[row].teamname + "in KO Phase raus");
           tempGroup[row].out_in_ko = true;
         } else if (
           teamid === finishedGames[game].team2_id &&
           teamid !== finishedGames[game].winner_id
         ) {
-          console.log(tempGroup[row].teamname + "in KO Phase raus");
           tempGroup[row].out_in_ko = true;
         }
       }

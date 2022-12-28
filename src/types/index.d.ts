@@ -57,7 +57,11 @@ type BPTeamResponse = {
   teamid: number;
   teamname: string;
 };
-type ModalContentType = "edit-teams" | "add-missing-teams" | "enter-results";
+type ModalContentType =
+  | "edit-teams"
+  | "add-missing-teams"
+  | "enter-results"
+  | "edit-results";
 
 type BPMatch = {
   match_id: number;

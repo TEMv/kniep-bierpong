@@ -15,6 +15,7 @@ import Amrum8 from "../assets/LandingPagePhotos/Amrum_2022_BPT-6848.jpg";
 import Amrum9 from "../assets/LandingPagePhotos/Amrum_2022_BPT-6854.jpg";
 import backgroundvideo from "../assets/Video/amrum.mp4";
 import Kniepe from "../assets/Images/Bild_Kniepe.png";
+import Kniepe_neu from "../assets/Images/Bild_Kniepe_neu.png";
 import type { ImageIndex } from "../types";
 import { arrowLeft, clock, house, play } from "./icons";
 const index: ImageIndex = {
@@ -39,6 +40,6 @@ const index: ImageIndex = {
   },
   Videos: { backgroundvideo },
   Icons: { arrowLeft, clock, house, play },
-  Images: { Kniepe },
+  Images: { Kniepe, Kniepe_neu },
 };
 export default index;

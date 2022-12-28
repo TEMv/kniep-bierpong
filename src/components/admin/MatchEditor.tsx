@@ -8,7 +8,8 @@ function MatchEditor(props: {
   bpid: number;
 }) {
   const tische = useTischState(props.matches);
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [enterModalVisible, setEnterModalVisible] = useState<boolean>(false);
+  const [editModalVisible, setEditModalVisible] = useState<boolean>(false);
   const [currentModalData, setCurrentModalData] = useState({
     match: {},
     teams: { team1: {}, team2: {} },
@@ -30,7 +31,7 @@ function MatchEditor(props: {
       match: match,
       teams: { team1: team1, team2: team2 },
     });
-    setModalVisible(true);
+    setEnterModalVisible(true);
   }
   function handleMatchClick(matchid: number) {
     if (matchid === -1) return;
@@ -90,8 +91,8 @@ function MatchEditor(props: {
           }`}
         >
           <Modal
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
+            modalVisible={enterModalVisible}
+            setModalVisible={setEnterModalVisible}
             title="Ergebnis eintragen"
             type="enter-results"
             bpid={props.bpid}
@@ -112,6 +113,22 @@ function MatchEditor(props: {
               </div>
             </div>
           )}
+          {false && (
+            <div
+              onClick={() => setEditModalVisible(true)}
+              className="w-64 bg-slate-800 rounded-lg mb-14 border text-red-400 border-slate-400 text-center cursor-pointer text-2xl py-2"
+            >
+              Ergebnisse bearbeiten
+            </div>
+          )}
+          <Modal
+            modalVisible={editModalVisible}
+            setModalVisible={setEditModalVisible}
+            title="Ergebnisse bearbeiten"
+            type="edit-results"
+            bpid={props.bpid}
+            data={{ matches: props.matches, teams: props.teams }}
+          />
           <div>
             {tische.slice(16, 18).map((tisch, index) => (
               <div

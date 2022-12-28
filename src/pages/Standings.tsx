@@ -72,12 +72,12 @@ function Standings(props: any) {
     }
     activeMatches.sort((a, b) => a.table_id - b.table_id);
     return (
-      <div className="text-4xl flex flex-col justify-end pb-8 h-screen items-center text-white">
+      <div className="text-4xl flex flex-col justify-end pb-32 h-screen items-center text-white">
         <div className="text-5xl text-white my-4 font-georgia tracking-widest">
           Tischplan
         </div>
         <div className="flex w-full justify-center">
-          <div className="flex flex-col">
+          <div className="flex flex-col w-72">
             {activeMatches.slice(0, 8).map((match, index) => (
               <div
                 className="w-64 bg-slate-800 rounded-lg my-3 relative px-2 mr-8 border  border-slate-400 h-20 text-base text-center"
@@ -107,11 +107,11 @@ function Standings(props: any) {
             ))}
           </div>
           <img
-            src={img.Images.Kniepe}
+            src={img.Images.Kniepe_neu}
             className=" w-1/2 block max-w-4xl "
             alt="Kniepe"
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col w-72">
             {activeMatches
               .slice(8, activeMatches.length)
               .map((match, index) => (
@@ -150,8 +150,8 @@ function Standings(props: any) {
     let koGames = matches.data.filter((match: any) => match.group >= 10);
     console.log(koGames);
     return (
-      <div className="text-4xl flex flex-col items-center  bg-slate-900 w-[1700px] text-white">
-        <div className="flex w-full justify-evenly mt-16">
+      <div className="text-4xl flex flex-col items-center  bg-slate-900 w-[1920px] text-white">
+        <div className="flex w-full justify-evenly mt-24">
           <div className="flex flex-col justify-start">
             <div className="flex justify-center">KO-2</div>
             <div className="flex flex-col h-full justify-evenly">

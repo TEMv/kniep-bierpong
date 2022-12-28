@@ -8,6 +8,8 @@ import Bierpong from "./Bierpong";
 import EventWrapper from "./EventWrapper";
 import AdminPage from "./AdminPage";
 import BierpongErgebnisPage from "./BierpongErgebnisPage";
+import Galerie from "./Galerie";
+import Feedback from "./Feedback";
 export {
   Events,
   Impressum,
@@ -19,4 +21,6 @@ export {
   EventWrapper,
   AdminPage,
   BierpongErgebnisPage,
+  Galerie,
+  Feedback,
 };

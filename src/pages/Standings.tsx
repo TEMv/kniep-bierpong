@@ -4,10 +4,9 @@ import { useTeams, useMatches } from "../hooks/queries";
 import { useTableState } from "../hooks/tableState";
 import img from "../assets/index";
 import { BPMatch, NextGameMap, BPTeamResponse } from "../types";
-import { koMatches } from "../constants";
 
 function Standings(props: any) {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const teams = useTeams(props.eventid, true);
   const matches = useMatches(props.eventid);
   const tableState = useTableState(
@@ -21,11 +20,11 @@ function Standings(props: any) {
     matches.data.filter((match: any) => match.winner_id).length === 163;
 
   useEffect(() => {
-    //const interval = setInterval(() => {
-    //  setCurrentPage((old) => (old + 1) % (isKO ? 2 : 3));
-    //  matches.refetch();
-    //}, 5000);
-    //return () => clearInterval(interval);
+    const interval = setInterval(() => {
+      setCurrentPage((old) => (old + 1) % (isKO ? 2 : 3));
+      matches.refetch();
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const PageOne = () => {
@@ -705,6 +704,8 @@ function Standings(props: any) {
     );
   };
   const PageFive = () => {
+    let winnerTeam = matches.data[matches.data.length - 1];
+
     return <div>over</div>;
   };
   return (

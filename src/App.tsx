@@ -11,6 +11,8 @@ import {
   EventWrapper,
   AdminPage,
   BierpongErgebnisPage,
+  Galerie,
+  Feedback,
 } from "./pages/index";
 import type { User, EventProps } from "./types";
 import { emptyUser } from "./constants";
@@ -64,6 +66,8 @@ function App() {
         </Route>
         <Route path="login" element={<Login setUser={setUser} />} />
         <Route path="impressum" element={<Impressum />} />
+        <Route path="galerie" element={<Galerie />} />
+        <Route path="feedback" element={<Feedback />} />
       </Routes>
     </div>
   );

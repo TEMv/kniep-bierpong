@@ -25,7 +25,7 @@ function Standings(props: any) {
       matches.refetch();
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isKO]);
 
   const PageOne = () => {
     return (
@@ -72,7 +72,7 @@ function Standings(props: any) {
     }
     activeMatches.sort((a, b) => a.table_id - b.table_id);
     return (
-      <div className="text-4xl flex flex-col justify-end pb-10 h-screen items-center text-white">
+      <div className="text-4xl flex flex-col justify-end pb-8 h-screen items-center text-white">
         <div className="text-5xl text-white my-4 font-georgia tracking-widest">
           Tischplan
         </div>
@@ -150,8 +150,8 @@ function Standings(props: any) {
     let koGames = matches.data.filter((match: any) => match.group >= 10);
     console.log(koGames);
     return (
-      <div className="text-4xl flex flex-col items-center  bg-slate-900 w-[1920px] text-white">
-        <div className="flex w-full justify-evenly">
+      <div className="text-4xl flex flex-col items-center  bg-slate-900 w-[1700px] text-white">
+        <div className="flex w-full justify-evenly mt-16">
           <div className="flex flex-col justify-start">
             <div className="flex justify-center">KO-2</div>
             <div className="flex flex-col h-full justify-evenly">
@@ -704,9 +704,32 @@ function Standings(props: any) {
     );
   };
   const PageFive = () => {
-    let winnerTeam = matches.data[matches.data.length - 1];
+    let winnerGame: BPMatch = matches.data[matches.data.length - 1];
 
-    return <div>over</div>;
+    return (
+      <div className="flex h-screen justify-center items-center text-4xl text-white">
+        <div>
+          {
+            teams.data.filter(
+              (team: BPTeamResponse) => team.teamid === winnerGame.winner_id
+            )[0].teamname
+          }{" "}
+          ist der Gewinner!
+          <br />
+          {
+            teams.data.filter(
+              (team: BPTeamResponse) => team.teamid === winnerGame.winner_id
+            )[0].players.p1.name
+          }{" "}
+          und{" "}
+          {
+            teams.data.filter(
+              (team: BPTeamResponse) => team.teamid === winnerGame.winner_id
+            )[0].players.p2.name
+          }
+        </div>
+      </div>
+    );
   };
   return (
     <div

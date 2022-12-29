@@ -91,7 +91,7 @@ type ValidOpponents = {
   [key: number]: Array<number>;
 };
 type NextGameMap = {
-  [key: number]: number | null;
+  [key: number]: number;
 };
 type BPTables = {
   tableA: Array<TableRow>;
@@ -108,6 +108,9 @@ type MatchResult = {
   match_id: number;
   winner_id: number;
   cup_diff: number;
+};
+type GroupMapType = {
+  [key: number]: string;
 };
 export {
   User,
@@ -126,4 +129,5 @@ export {
   GroupBreakpoints,
   ValidOpponents,
   NextGameMap,
+  GroupMapType,
 };

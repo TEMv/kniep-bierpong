@@ -5,6 +5,7 @@ import {
   BPTables,
   TableRow,
   ValidOpponents,
+  NextGameMap,
 } from "../types";
 import {
   recalcBreakpoints,
@@ -25,6 +26,23 @@ export function useNextGames(
   const queryClient = useQueryClient();
   const addMatches = useAddMatches(bpid, queryClient);
   const [koGamesBuilt, setKoGamesBuilt] = useState(false);
+  const KOGameMap: NextGameMap = {
+    26: 5,
+    27: 6,
+    28: 7,
+    29: 8,
+    30: 9,
+    31: 10,
+    32: 11,
+    33: 12,
+    34: 9,
+    35: 10,
+    36: 11,
+    37: 12,
+    38: 11,
+    39: 12,
+    40: 12,
+  };
   useEffect(() => {
     if (!enabled) {
       return;
@@ -74,7 +92,7 @@ export function useNextGames(
           team1_id: game1?.winner_id,
           team2_id: game2?.winner_id,
           group: koMatches[match].id,
-          table_id: koMatches[match].id - 25,
+          table_id: KOGameMap[koMatches[match].id],
         };
         addMatches.mutate({ matches: [newmatch] });
       }

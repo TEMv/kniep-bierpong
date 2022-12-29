@@ -1,4 +1,10 @@
-import type { User, TableRow, TischState, GroupBreakpoints } from "../types";
+import type {
+  User,
+  TableRow,
+  TischState,
+  GroupBreakpoints,
+  GroupMapType,
+} from "../types";
 const emptyUser: User = {
   username: "",
   firstname: "",
@@ -8,12 +14,12 @@ const emptyUser: User = {
   last_login: new Date(),
 };
 
-const GroupMap = {
+const GroupMap: GroupMapType = {
   0: "Gruppe A",
   1: "Gruppe B",
   2: "Gruppe C",
   3: "Gruppe D",
-} as const;
+};
 
 const recalcBreakpoints = {
   0: 8,

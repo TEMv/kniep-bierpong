@@ -2,6 +2,7 @@ import { BPMatch, BPTeamResponse } from "../../types";
 import { useTischState } from "../../hooks/tische";
 import Modal from "../Modal";
 import { useState } from "react";
+import { GroupMap } from "../../constants";
 function MatchEditor(props: {
   matches: Array<BPMatch>;
   teams: Array<BPTeamResponse>;
@@ -52,7 +53,16 @@ function MatchEditor(props: {
               onClick={() => handleMatchClick(tisch.match_id)}
             >
               <div className="border-b flex justify-center items-center border-slate-400 h-8">
-                Tisch {index + 1}
+                Tisch {index + 1} -{" "}
+                {GroupMap[
+                  props.matches?.filter(
+                    (match) => match.match_id === tisch.match_id
+                  )[0]?.group
+                ] ||
+                  (props.matches?.filter(
+                    (match) => match.match_id === tisch.match_id
+                  )[0]?.group > 10 &&
+                    "KO")}
               </div>
               <div className="flex justify-between h-12 items-center mx-2 text-sm ">
                 <div className=" line-clamp-2 w-28 pr-2">
@@ -137,7 +147,16 @@ function MatchEditor(props: {
                 onClick={() => handleMatchClick(tisch.match_id)}
               >
                 <div className="border-b flex justify-center items-center border-slate-400 h-8">
-                  Tisch {index + 17}
+                  Tisch {index + 17} -{" "}
+                  {GroupMap[
+                    props.matches?.filter(
+                      (match) => match.match_id === tisch.match_id
+                    )[0]?.group
+                  ] ||
+                    (props.matches?.filter(
+                      (match) => match.match_id === tisch.match_id
+                    )[0]?.group > 10 &&
+                      "KO")}
                 </div>
                 <div className="flex justify-between h-12 items-center mx-2 text-sm ">
                   <div className=" line-clamp-2 w-28 pr-2">
@@ -177,7 +196,16 @@ function MatchEditor(props: {
               onClick={() => handleMatchClick(tisch.match_id)}
             >
               <div className="border-b border-slate-400 h-8">
-                Tisch {index + 9}
+                Tisch {index + 9} -{" "}
+                {GroupMap[
+                  props.matches?.filter(
+                    (match) => match.match_id === tisch.match_id
+                  )[0]?.group
+                ] ||
+                  (props.matches?.filter(
+                    (match) => match.match_id === tisch.match_id
+                  )[0]?.group > 10 &&
+                    "KO")}
               </div>
               <div className="flex justify-between h-12 items-center mx-2 text-sm ">
                 <div className=" line-clamp-2 w-28 pr-2">

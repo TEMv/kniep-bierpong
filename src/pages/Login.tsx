@@ -19,7 +19,7 @@ function Login(props: any) {
     key: string
   ): void => {
     if (
-      (/^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(
+      (/^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+$/.test(
         e.target.value
       ) &&
         key === "username") ||

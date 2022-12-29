@@ -3,7 +3,7 @@ function Table(props: { data: Array<TableRow>; title: string; size: string }) {
   return (
     <div
       className={`overflow-x-auto w-full p-2 relative  ${
-        props.size === "lg" && "w-1/2"
+        props.size === "lg" && "lg:w-1/2 w-full"
       }`}
     >
       <span
